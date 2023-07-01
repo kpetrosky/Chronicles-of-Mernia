@@ -4,7 +4,7 @@ const { Schema, model } = require('mongoose');
 const encounterSchema = new Schema({
   initiative: {
     type: String,
-    required: 'You need to leave a encounter!',
+    required: 'You are entering a encounter!',
     minlength: 1,
     maxlength: 280,
     trim: true,
