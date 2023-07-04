@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-
+const weaponSchema = require ("./Weapon")
 const partyMemberSchema = new Schema({
   name: {
     type: String,
@@ -22,11 +22,8 @@ const partyMemberSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  weapon: {
-    type: String,
-    required: true,
-    minlength: 5,
-  },
+  weapon: weaponSchema,
+
   level: {
     type: Number,
     required: true,

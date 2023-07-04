@@ -7,21 +7,14 @@ const partySchema = new Schema({
     unique: true,
     trim: true,
   },
-  speed: {
-    type: String,
-    required: true,
-    minlength: 5,
-  },
-  health: {
-    type: String,
-    required: true,
-    minlength: 5,
-  },
-  members: {
-    type: String,
-    required: true,
-    minlength: 4,
-  },
+  members: [{
+    type: Schema.Types.ObjectId,
+    ref: "PartyMember"
+  }],
+  encounters: [{
+    type: Schema.Types.ObjectId,
+    ref: "Encounter"
+  }]
 });
 
 const Party = model('Party', partySchema);

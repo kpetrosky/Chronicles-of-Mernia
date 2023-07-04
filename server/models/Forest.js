@@ -23,9 +23,9 @@ const giantWaspSchema = new Schema({
     minlength: 5,
   },
   speed: {
-    type: String,
+    type: Number,
     required: true,
-    minlength: 5,
+    default: 1,
   },
 });
 
@@ -51,9 +51,9 @@ const koboldSchema = new Schema({
     minlength: 5,
   },
   speed: {
-    type: String,
+    type: Number,
     required: true,
-    minlength: 5,
+    default: 1,
   },
 });
 
@@ -79,9 +79,9 @@ const orcSchema = new Schema({
       minlength: 5,
     },
     speed: {
-      type: String,
-      required: true,
-      minlength: 5,
+      type: Number,
+    required: true,
+    default: 1,
     },
   });
   const tigerSchema = new Schema({
@@ -106,9 +106,9 @@ const orcSchema = new Schema({
       minlength: 5,
     },
     speed: {
-      type: String,
+      type: Number,
       required: true,
-      minlength: 5,
+      default: 1,
     },
   });const goblinSchema = new Schema({
     name: {
@@ -132,9 +132,9 @@ const orcSchema = new Schema({
       minlength: 5,
     },
     speed: {
-      type: String,
-      required: true,
-      minlength: 5,
+      type: Number,
+    required: true,
+    default: 1,
     },
   });const bearSchema = new Schema({
     name: {
@@ -158,9 +158,9 @@ const orcSchema = new Schema({
       minlength: 5,
     },
     speed: {
-      type: String,
-      required: true,
-      minlength: 5,
+      type: Number,
+    required: true,
+    default: 1,
     },
   });
   const elderitchOozeSchema = new Schema({
@@ -185,9 +185,9 @@ const orcSchema = new Schema({
       minlength: 5,
     },
     speed: {
-      type: String,
-      required: true,
-      minlength: 5,
+      type: Number,
+    required: true,
+    default: 1,
     },
   });
 const forestMonsterSchema = new Schema({
@@ -202,7 +202,8 @@ const forestMonsterSchema = new Schema({
   tiger: tigerSchema,
   bear: bearSchema,
   elderitchOoze: elderitchOozeSchema,
-
+  goblin: goblinSchema,
+//can change to an array to make it possible to have multiple of the same creature
 });
 
 const ForestMonster = model('ForestMonster', forestMonsterSchema);
