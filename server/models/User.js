@@ -13,7 +13,7 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  parties: [
+  party: [
     {
       type: Schema.Types.ObjectId,
       ref: "Party"
