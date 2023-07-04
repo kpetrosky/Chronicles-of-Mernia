@@ -10,32 +10,31 @@ const partyMemberSchema = new Schema({
   class: {
     type: String,
     required: true,
-    minlength: 5,
+    
   },
   special: {
-    type: String,
+    type: Number,
     required: true,
-    minlength: 5,
+    
   },
   attack: {
     type: Number,
     required: true,
-    minlength: 5,
+    
   },
   weapon: weaponSchema,
 
-  level: {
+  attack: {
     type: Number,
     required: true,
-    minlength: 1,
   },
-  damage: {
-    type: Number,
-    required: true,
-    minlength: 1,
-  },
-});
+  // level: {
+  //   type: Number,
+  //   required: true,
+  // },
 
+});
+//current hp, max, hp, defense, speed, dodge,
 const PartyMember = model('PartyMember', partyMemberSchema);
 
 module.exports = PartyMember;
