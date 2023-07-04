@@ -6,7 +6,7 @@ name:{
     require: true,
 },
 damage:{
-    type:Number,
+    type: Array,
     require: true,
 },  
 });

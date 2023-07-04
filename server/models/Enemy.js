@@ -14,7 +14,7 @@ const enemySchema = new Schema({
         type: Number,
     },
     speed: {
-        type: Number,
+        type: Array,
     },
 });
 
