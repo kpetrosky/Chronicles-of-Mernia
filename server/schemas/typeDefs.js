@@ -1,31 +1,63 @@
 const { gql } = require('apollo-server-express');
 
-const typeDefs = gql`
-  type Thought {
-    _id: ID
-    thoughtText: String
-    thoughtAuthor: String
-    createdAt: String
-    comments: [Comment]!
+// About type definitions
+const aboutTypeDefs = gql`
+  type About {
+    _id: ID!
+    aboutText: String!
+    aboutAuthor: String!
+    createdAt: String!
   }
 
-  type Comment {
-    _id: ID
-    commentText: String
-    createdAt: String
+  extend type Query {
+    abouts: [About]
+    about(aboutId: ID!): About
   }
 
-  type Query {
-    thoughts: [Thought]!
-    thought(thoughtId: ID!): Thought
-  }
-
-  type Mutation {
-    addThought(thoughtText: String!, thoughtAuthor: String!): Thought
-    addComment(thoughtId: ID!, commentText: String!): Thought
-    removeThought(thoughtId: ID!): Thought
-    removeComment(thoughtId: ID!, commentId: ID!): Thought
+  extend type Mutation {
+    addAbout(aboutText: String!, aboutAuthor: String!): About
+    removeAbout(aboutId: ID!): About
   }
 `;
 
-module.exports = typeDefs;
+// Product type definitions
+const productTypeDefs = gql`
+  type Product {
+    _id: ID!
+    productName: String!
+    productDescription: String!
+    createdAt: String!
+  }
+
+  extend type Query {
+    products: [Product]
+    product(productId: ID!): Product
+  }
+
+  extend type Mutation {
+    addProduct(productName: String!, productDescription: String!): Product
+    removeProduct(productId: ID!): Product
+  }
+`;
+
+// CustomWork type definitions
+const customWorkTypeDefs = gql`
+  type CustomWork {
+    _id: ID!
+    customWorkName: String!
+    customWorkDescription: String!
+    createdAt: String!
+  }
+
+  extend type Query {
+    customWorks: [CustomWork]
+    customWork(customWorkId: ID!): CustomWork
+  }
+
+  extend type Mutation {
+    addCustomWork(customWorkName: String!, customWorkDescription: String!): CustomWork
+    removeCustomWork(customWorkId: ID!): CustomWork
+  }
+`;
+
+module.exports = [aboutTypeDefs, productTypeDefs, customWorkTypeDefs];

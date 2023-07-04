@@ -13,6 +13,12 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
+  parties: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Party"
+    }
+  ]
  });
 
 userSchema.pre('save', async function (next) {

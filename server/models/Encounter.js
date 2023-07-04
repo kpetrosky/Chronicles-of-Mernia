@@ -2,18 +2,39 @@ const { Schema, model } = require('mongoose');
 
 
 const encounterSchema = new Schema({
-  initiative: {
+    initiativeOrder1: {
     type: String,
-    required: 'You need to leave a encounter!',
-    minlength: 1,
-    maxlength: 280,
     trim: true,
   },
-  encounter: {
+  initiativeOrder2: {
     type: String,
-    required: true,
     trim: true,
   },
+  initiativeOrder3: {
+    type: String,
+    trim: true,
+  },
+  initiativeOrder4: {
+    type: String,
+    trim: true,
+  }, 
+  initiativeOrder5: {
+    type: String,
+    trim: true,
+  }, 
+  initiativeOrder6: {
+    type: String,
+    trim: true,
+  },
+   initiativeOrder7: {
+    type: String,
+    trim: true,
+  },
+   initiativeOrder8: {
+    type: String,
+    trim: true,
+  }, 
+  
 
 });
 
