@@ -1,6 +1,9 @@
 const db = require('../config/connection');
-const { Thought } = require('../models');
-const thoughtSeeds = require('./thoughtSeeds.json');
+const { Encounter, Enemy, User, Party, PartyMember, Weapon } = require('../models');
+const encounters = require('./encounters.json');
+const enemies = require('./enemies.json');
+const partyMembers = require('./partyMembers.json');
+const weapons = require('./weapons.json');
 
 db.once('open', async () => {
   await Thought.deleteMany({});

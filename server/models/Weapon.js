@@ -5,9 +5,12 @@ name:{
     type: String,
     require: true,
 },
-  damage:{
+damage:{
     type:Number,
     require: true,
-  }  
-})
-module.exports = weaponSchema;
+},  
+});
+
+const Weapon = model("Weapon", weaponSchema);
+
+module.exports = Weapon;

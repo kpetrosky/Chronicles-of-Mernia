@@ -1,3 +1,3 @@
-const { User, Forest, Party, PartyMember } = require('./models');
+const { Encounter, Enemy, User, Party, PartyMember, Weapon } = require('./models');
 
-module.exports = { User, Forest, Party, PartyMember };
+module.exports = { Encounter, Enemy, User, Party, PartyMember, Weapon };
