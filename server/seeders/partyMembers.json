@@ -1,0 +1,13 @@
+[
+    {
+        "name": "Barbarian",
+        "class": "Barbarian",
+        "special": 10,
+        "maxHp": 20,
+        "currentHp": 20,
+        "attack": 30,
+        "defense": 15,
+        "speed": [3,5],
+        "dodge": 5
+    }
+]
