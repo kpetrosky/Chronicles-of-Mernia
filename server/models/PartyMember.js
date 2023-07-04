@@ -32,7 +32,7 @@ const partyMemberSchema = new Schema({
     required: true,
   },
   speed: {
-    type: Number,
+    type: Array,
     required: true,
   },
   dodge: {
