@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const weaponSchema = require ("./Weapon")
+
 const partyMemberSchema = new Schema({
   name: {
     type: String,
@@ -10,31 +10,41 @@ const partyMemberSchema = new Schema({
   class: {
     type: String,
     required: true,
-    
   },
   special: {
     type: Number,
     required: true,
-    
+  },
+  maxHp: {
+    type: Number,
+    required: true,
+  },
+  currentHp: {
+    type: Number,
+    required: true,
   },
   attack: {
     type: Number,
     required: true,
-    
   },
-  weapon: weaponSchema,
-
-  attack: {
+  defense: {
     type: Number,
     required: true,
   },
-  // level: {
-  //   type: Number,
-  //   required: true,
-  // },
-
+  speed: {
+    type: Number,
+    required: true,
+  },
+  dodge: {
+    type: Number,
+    required: true,
+  },
+  weapon: {
+    type: Schema.Types.ObjectId,
+    ref: "Weapon"
+  },
 });
-//current hp, max, hp, defense, speed, dodge,
+
 const PartyMember = model('PartyMember', partyMemberSchema);
 
 module.exports = PartyMember;
