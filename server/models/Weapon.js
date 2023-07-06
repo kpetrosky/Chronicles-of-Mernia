@@ -8,7 +8,11 @@ name:{
 damage:{
     type: Array,
     require: true,
-},  
+},
+class:{
+    type: String,
+    require: true,
+},
 });
 
 const Weapon = model("Weapon", weaponSchema);

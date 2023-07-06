@@ -43,6 +43,9 @@ const partyMemberSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Weapon"
   },
+  position: {
+    type: Number
+  }
 });
 
 const PartyMember = model('PartyMember', partyMemberSchema);

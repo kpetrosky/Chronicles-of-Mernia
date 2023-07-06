@@ -1,0 +1,42 @@
+[
+    {
+        "name": "Longsword",
+        "damage": [1,8],
+        "class": "Fighter"
+    },
+    {
+        "name": "Warhammer",
+        "damage": [1,8],
+        "class": "Paladin"
+    },
+    {
+        "name": "Divine Symbol",
+        "damage": [1,4],
+        "class": "Cleric"
+    },
+    {
+        "name": "Spellbook",
+        "damage": [1,8],
+        "class": "Wizard"
+    },
+    {
+        "name": "Dagger",
+        "damage": [1,4],
+        "class": "Rogue"
+    },
+    {
+        "name": "Longbow",
+        "damage": [1,8],
+        "class": "Ranger"
+    },
+    {
+        "name": "Battleaxe",
+        "damage": [1,8],
+        "class": "Barbarian"
+    },
+    {
+        "name": "Staff",
+        "damage": [1,4],
+        "class": "Druid"
+    }
+]
