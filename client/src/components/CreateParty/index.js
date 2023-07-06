@@ -1,65 +1,101 @@
 import React, { useState } from 'react';
 
-function  ClassForm(){
-let [class, setClass] = useState('');
+// function  ClassForm(){
+//     const [input, setInput] = useState('');
+// let [characterClass, setCharacterClass] = useState('');
 
-const ClassType =['Ranger','Melee','Support','Tank']
+const ClassType =['Range','Melee','Support','Tank']
 
 
-<div>
+
+
+function ClassForm() {
+  const [characters, setCharacter] = useState([]);
+  const [input, setInput] = useState('');
+  const [characterClass, setCharacterClass] = useState('');
+
+  const classOptions = ['Wizard', 'Ranger', 'Rogue', 'Barbarian', 'Cleric', 'Druid', 'Fighter', 'Paladin'];
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    setInput('');
+    setCharacterClass('');
+  };
+
+  const handleChange = (e) => {
+    setInput(e.target.value);
+  };
+
+  const handleClassChange = (value) => {
+    setCharacterClass(value);
+  };
+
+  return (
+    <div>
       <form className="character-form" onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Name your character "
+          placeholder="Name your character"
           value={input}
           name="text"
           className="character-input"
           onChange={handleChange}
-        ></input>
+        />
         <div className="dropdown">
-          <button className={`dropbtn ${class}`}>
-            {class || 'ClassType'}
+          <button className={`dropbtn ${characterClass}`}>
+            {characterClass || 'ClassType'}
           </button>
           <div className="dropdown-content">
-            <p onClick={() => setClass(ClassType[0])}>Wizard</p>
-            <p onClick={() => setClass(ClassType[0])}>Ranger</p>
-            <p onClick={() => setClass(ClassType[1])}>Rougue</p>
-            <p onClick={() => setClass(ClassType[1])}>Barbarian</p>
-            <p onClick={() => setClass(ClassType[2])}>Cleric</p>
-            <p onClick={() => setClass(ClassType[2])}>Druid</p>
-            <p onClick={() => setClass(ClassType[3])}>Fighter</p>
-            <p onClick={() => setClass(ClassType[3])}>Paladin</p>
+            {classOptions.map((option) => (
+              <p key={option} onClick={() => handleClassChange(option)}>
+                {option}
+              </p>
+            ))}
           </div>
         </div>
-        <button className="party-button">Add Character to party </button>
-        </form>
-   </div>   
-}  
-{/* 
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Character Select
-  </button>
-  <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="#">Ranged</a>
-        <li><a class="dropdown-item" href="#">Wizard</a></li>
-        <li><a class="dropdown-item" href="#">Ranger</a></li>
-    </li>
-    <li><a class="dropdown-item" href="#">Melee</a>
-        <li><a class="dropdown-item" href="#">Barbarian</a></li>
-        <li><a class="dropdown-item" href="#">Rougue</a></li>
-    </li>
-    <li><a class="dropdown-item" href="#">Support</a>
-        <li><a class="dropdown-item" href="#">Cleric</a></li>
-        <li><a class="dropdown-item" href="#">Druid</a></li>
-    
-    </li>
-    <li><a class="dropdown-item" href="#">Tank</a>
-        <li><a class="dropdown-item" href="#">Fighter</a></li>
-        <li><a class="dropdown-item" href="#">Paladin</a></li>
-    </li>
-  </ul>
-</div> */}
+        <button className="party-button">Add Character to party</button>
+      </form>
+      <div className="dropdown">
+        <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Character Select
+        </button>
+        <ul className="dropdown-menu">
+          <li>
+            <a className="dropdown-item" href="#">Ranged</a>
+            <ul className="dropdown-menu">
+              <li><a className="dropdown-item" href="#">Wizard</a></li>
+              <li><a className="dropdown-item" href="#">Ranger</a></li>
+            </ul>
+          </li>
+          <li>
+            <a className="dropdown-item" href="#">Melee</a>
+            <ul className="dropdown-menu">
+              <li><a className="dropdown-item" href="#">Barbarian</a></li>
+              <li><a className="dropdown-item" href="#">Rogue</a></li>
+            </ul>
+          </li>
+          <li>
+            <a className="dropdown-item" href="#">Support</a>
+            <ul className="dropdown-menu">
+              <li><a className="dropdown-item" href="#">Cleric</a></li>
+              <li><a className="dropdown-item" href="#">Druid</a></li>
+            </ul>
+          </li>
+          <li>
+            <a className="dropdown-item" href="#">Tank</a>
+            <ul className="dropdown-menu">
+              <li><a className="dropdown-item" href="#">Fighter</a></li>
+              <li><a className="dropdown-item" href="#">Paladin</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+};
+export default ClassForm;
+
 
 {/* 
 const handleSubmit = (e) => {
