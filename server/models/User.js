@@ -13,12 +13,14 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  party: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Party"
-    }
-  ]
+  party: {
+    type: Schema.Types.ObjectId,
+    ref: "Party"
+  },
+  progression: {
+    type: Number,
+    required: true,
+  }
  });
 
 userSchema.pre('save', async function (next) {

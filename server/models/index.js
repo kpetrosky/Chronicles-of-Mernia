@@ -1,5 +1,5 @@
 const Encounter = require('./Encounter');
-const Enemy = require('./Enemy');
+const Enemy = require('./enemy');
 const User = require('./User');
 const Party = require('./Party');
 const PartyMember = require('./PartyMember');

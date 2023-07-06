@@ -46,6 +46,10 @@ const encounterSchema = new Schema({
   biome: {
     type: String,
   },
+  progression: {
+    type: Number,
+    required: true
+  },
 });
 
 const Encounter = model('Encounter', encounterSchema);
