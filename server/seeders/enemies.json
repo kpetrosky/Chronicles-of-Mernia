@@ -1,0 +1,58 @@
+[
+    {
+        "name": "Giant Wasp",
+        "class": "Giant Wasp",
+        "maxHp": 8,
+        "attack": 10,
+        "speed": [3,5]
+    },
+    {
+        "name": "Kobold",
+        "class": "Kobold",
+        "maxHp": 10,
+        "attack": 15,
+        "speed": [6,8]
+    },
+    {
+        "name": "Vulture",
+        "class": "Vulture",
+        "maxHp": 12,
+        "attack": 20,
+        "speed": [1,3]
+    },
+    {
+        "name": "Orc",
+        "class": "Orc",
+        "maxHp": 15,
+        "attack": 25,
+        "speed": [4,6]
+    },
+    {
+        "name": "Tiger",
+        "class": "Tiger",
+        "maxHp": 17,
+        "attack": 30,
+        "speed": [4,6]
+    },
+    {
+        "name": "Goblin",
+        "class": "Goblin",
+        "maxHp": 16,
+        "attack": 25,
+        "speed": [4,6]
+    },
+    {
+        "name": "Bear",
+        "class": "Bear",
+        "maxHp": 19,
+        "attack": 35,
+        "speed": [6,8]
+    },
+    {
+        "name": "Eldritch ooze",
+        "class": "Elritch ooze",
+        "maxHp": 20,
+        "attack": 35,
+        "speed": [4,6]
+    }
+]
