@@ -1,63 +1,34 @@
 const { gql } = require('apollo-server-express');
 
-// About type definitions
-const aboutTypeDefs = gql`
-  type About {
-    _id: ID!
-    aboutText: String!
-    aboutAuthor: String!
-    createdAt: String!
+const typeDefs = gql`
+  type User {
+    _id: ID
+    username: String
+    password: String
+    party: Party
+    progression: Number
   }
 
-  extend type Query {
-    abouts: [About]
-    about(aboutId: ID!): About
+  type Auth {
+    token: ID!
+    user: User
   }
 
-  extend type Mutation {
-    addAbout(aboutText: String!, aboutAuthor: String!): About
-    removeAbout(aboutId: ID!): About
-  }
-`;
-
-// Product type definitions
-const productTypeDefs = gql`
-  type Product {
-    _id: ID!
-    productName: String!
-    productDescription: String!
-    createdAt: String!
+  type Query {
+    profiles: [Profile]!
+    profile(profileId: ID!): Profile
+    # Because we have the context functionality in place to check a JWT and decode its data, we can use a query that will always find and return the logged in user's data
+    me: Profile
   }
 
-  extend type Query {
-    products: [Product]
-    product(productId: ID!): Product
-  }
+  type Mutation {
+    addUser(username: String, password: String): Auth
+    login(username: String, password: String): Auth
 
-  extend type Mutation {
-    addProduct(productName: String!, productDescription: String!): Product
-    removeProduct(productId: ID!): Product
+    addSkill(profileId: ID!, skill: String!): Profile
+    removeProfile: Profile
+    removeSkill(skill: String!): Profile
   }
 `;
 
-// CustomWork type definitions
-const customWorkTypeDefs = gql`
-  type CustomWork {
-    _id: ID!
-    customWorkName: String!
-    customWorkDescription: String!
-    createdAt: String!
-  }
-
-  extend type Query {
-    customWorks: [CustomWork]
-    customWork(customWorkId: ID!): CustomWork
-  }
-
-  extend type Mutation {
-    addCustomWork(customWorkName: String!, customWorkDescription: String!): CustomWork
-    removeCustomWork(customWorkId: ID!): CustomWork
-  }
-`;
-
-module.exports = [aboutTypeDefs, productTypeDefs, customWorkTypeDefs];
+module.exports = typeDefs;
