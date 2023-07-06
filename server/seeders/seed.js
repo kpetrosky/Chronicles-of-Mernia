@@ -10,8 +10,8 @@ db.once('open', async () => {
   await Weapon.create(weapons);
   await PartyMember.deleteMany({});
   await PartyMember.create(partyMembers);
-  await enemies.deleteMany({});
-  await enemies.create(enemies);
+  await Enemies.deleteMany({});
+  await Enemies.create(enemies);
 
   console.log('all done!');
   process.exit(0);
