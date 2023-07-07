@@ -9,7 +9,7 @@ const ClassType =['Range','Melee','Support','Tank']
 
 
 
-function ClassForm() {
+function ClassForm({handleProgChange}) {
   const [characters, setCharacter] = useState([]);
   const [input, setInput] = useState('');
   const [characterClass, setCharacterClass] = useState('');

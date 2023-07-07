@@ -5,12 +5,13 @@ import Auth from '../../utils/auth';
 
 
 export default function SignUp({handleProgChange}) {
-    const [formState, setFormState] = useState({ username: '', password: '' });
-    const [login, { Error, Data }] = useMutation(LOGIN_USER);
-    const [addUser, { Error, Data }] = useMutation(ADD_USER);
-
+    const [formState, setFormState] = useState({ username: '', password: '', progression: 1 });
+    const [login, { error: loginError, data: loginData }] = useMutation(LOGIN_USER);
+    const [addUser, { error: addUserError, data: addUserData}] = useMutation(ADD_USER);
+    
     // update state based on form input changes
     const handleChange = (event) => {
+        event.preventDefault();
         const { name, value } = event.target;
 
         setFormState({
@@ -20,27 +21,31 @@ export default function SignUp({handleProgChange}) {
     };
 
     // submit form
+   
     const handleFormSubmit = async (event) => {
         event.preventDefault();
-        console.log(formState);
         if (event.target.id === "login-btn") {
             try {
                 const { data } = await login({
                     variables: { ...formState },
                 });
-        
+                
                 Auth.login(data.login.token);
-                } catch (e) {
-                console.error(e);
-            }
+                const userProgression = data.login.user.progression;
+                handleProgChange(userProgression)
+                } catch (loginError) {
+                console.error(loginError);
+                
+                }
+                
         }
         if (event.target.id === "signUp-btn") {
-            try {
+            try { 
                 const { data } = await addUser({
                   variables: { ...formState },
                 });
-          
                 Auth.login(data.addUser.token);
+                handleProgChange(1)
             } catch (e) {
                 console.error(e);
             }
@@ -75,8 +80,8 @@ export default function SignUp({handleProgChange}) {
                     value={formState.password}
                     onChange={handleChange}
                     />
-                <button id="login-btn" onClick={handleFormSubmit}>Login</button>
-                <button id="signUp-btn" onClick={handleFormSubmit}>Sign Up</button>
+                <button type="submit" id="login-btn" onClick={handleFormSubmit}>Login</button>
+                <button type="submit" id="signUp-btn" onClick={handleFormSubmit}>Sign Up</button>
             </form>
         </div>
     )
