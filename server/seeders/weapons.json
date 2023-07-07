@@ -2,41 +2,41 @@
     {
         "name": "Longsword",
         "damage": [1,8],
-        "class": "Fighter"
+        "characterClass": "Fighter"
     },
     {
         "name": "Warhammer",
         "damage": [1,8],
-        "class": "Paladin"
+        "characterClass": "Paladin"
     },
     {
         "name": "Divine Symbol",
         "damage": [1,4],
-        "class": "Cleric"
+        "characterClass": "Cleric"
     },
     {
         "name": "Spellbook",
         "damage": [1,8],
-        "class": "Wizard"
+        "characterClass": "Wizard"
     },
     {
         "name": "Dagger",
         "damage": [1,4],
-        "class": "Rogue"
+        "characterClass": "Rogue"
     },
     {
         "name": "Longbow",
         "damage": [1,8],
-        "class": "Ranger"
+        "characterClass": "Ranger"
     },
     {
         "name": "Battleaxe",
         "damage": [1,8],
-        "class": "Barbarian"
+        "characterClass": "Barbarian"
     },
     {
         "name": "Staff",
         "damage": [1,4],
-        "class": "Druid"
+        "characterClass": "Druid"
     }
 ]

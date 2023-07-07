@@ -1,100 +1,325 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useQuery, useMutation } from '@apollo/client';
+import { QUERY_WEAPONS } from '../../utils/queries';
+import { ADD_PARTY_MEMBER, ADD_PARTY, UPDATE_USER_PARTY } from '../../utils/mutations';
+import { findBaseStats } from '../../utils/baseStats';
+
+
+function ClassForm({handleProgChange}) {
+
+// Four forms render, each with a dropdown for class and name
+// Error handling for lack of selection
+// Once all selections are made and submit button clicked
+// Create helper function to get weapon based on class
+// Get position data from form component
+// Create array of objects that compile all the data needed to put to model
+// Map over array and update pm model using graphql
+// Then get all the newly created pm models and put into array, tie to party document
+// create party instance and tie to user automatically
+
+  const { data: weaponsData } = useQuery(QUERY_WEAPONS);
+  const [addPartyMember] = useMutation(ADD_PARTY_MEMBER);
+  const [addParty] = useMutation(ADD_PARTY);
+  const [updateUserParty] = useMutation(UPDATE_USER_PARTY);
+
+  const weapons = weaponsData?.weapons || [];
+
+  function findWeaponIdByClass(characterClass) {
+    const matchedWeapon = weapons.find((weapon) => weapon.characterClass === characterClass);
+    return matchedWeapon ? matchedWeapon._id : null;
+  }
+  
+
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    const name1 = event.target.elements.name1.value;
+    const characterClass1 = event.target.elements.class1.value;
+    const name2 = event.target.elements.name2.value;
+    const characterClass2 = event.target.elements.class2.value;
+    const name3 = event.target.elements.name3.value;
+    const characterClass3 = event.target.elements.class3.value;
+    const name4 = event.target.elements.name4.value;
+    const characterClass4 = event.target.elements.class4.value;
+    
+    const characterArray = [
+      {
+        name: name1.trim(),
+        characterClass: characterClass1,
+        position: 5
+      },
+      {
+        name: name2.trim(),
+        characterClass: characterClass2,
+        position: 6
+      },
+      {
+        name: name3.trim(),
+        characterClass: characterClass3,
+        position: 7
+      },
+      {
+        name: name4.trim(),
+        characterClass: characterClass4,
+        position: 8
+      }
+    ];
+    
+    const isEmpty = (value) => {
+      return value === '';
+    };
+
+    const isUnselected = (value) => {
+      return value === "Select Character Class..."
+    };
+
+    const containsEmpty = characterArray.some((character) => {
+      return Object.values(character).some(isEmpty);
+    });
+
+    const containsUnselected = characterArray.some((character) => {
+      return Object.values(character).some(isUnselected);
+    });
+
+    if (containsEmpty || containsUnselected) {
+      alert("Please fill all fields!");
+      return;
+    } else {
+      const compiledData = compilePartyData(characterArray)
+      console.log(compiledData);
+      const newPartyIds = [];
+      try {
+        for (const partyMember of compiledData) {
+          const response = await addPartyMember({
+            variables: { ...partyMember },
+          });
+          const partyMemberId = response.data.addPartyMember._id;
+          newPartyIds.push(partyMemberId);
+        }
+        const response = await addParty({
+          variables: { members: newPartyIds },
+        });
+        const newPartyId = response.data.addParty._id;
+        console.log(newPartyId);
+        await updateUserParty({
+          variables: { party: newPartyId },
+        });
+        console.log('Party Members Added!');
+      } catch (error) {
+        console.error("Error adding Party Members:", error)
+      }
+    }
+
+    event.target.reset();
+  }
+
+
+  function compilePartyData(characterArray) {
+    return characterArray.map((object) => {
+      const { characterClass } = object;
+      const weaponId = findWeaponIdByClass(characterClass);
+      const baseStats = findBaseStats(characterClass);
+      const { maxHp: hp } = baseStats;
+      const updatedBaseStats = {
+        ...baseStats,
+        currentHp: hp
+      };
+      return {
+        ...object,
+        weapon: weaponId,
+        ...updatedBaseStats
+      }
+    })
+  }
+  
+
+  const characterClasses = ["Barbarian", "Rogue", "Ranger", "Wizard", "Cleric", "Druid", "Paladin", "Fighter"]
+
+  return (
+  <div>
+      <form onSubmit={handleFormSubmit}>
+        <section>
+          <h2 className="card-title">Party Member 1</h2>
+          <label htmlFor="name">Name:</label>
+          <input type="text" id="name1" name="name" />
+          <select id="class1">
+            <option>Select Character Class...</option>
+            {characterClasses.map((CharacterClasses) => (
+              <option key={CharacterClasses} value={CharacterClasses}>
+                {CharacterClasses}
+              </option>
+            ))}
+          </select>
+        </section>
+        <section>
+          <h2 className="card-title">Party Member 2</h2>
+          <label htmlFor="name">Name:</label>
+          <input type="text" id="name2" name="name" />
+          <select id="class2">
+            <option>Select Character Class...</option>
+            {characterClasses.map((CharacterClasses) => (
+              <option key={CharacterClasses} value={CharacterClasses}>
+                {CharacterClasses}
+              </option>
+            ))}
+          </select>
+        </section>
+        <section>
+          <h2 className="card-title">Party Member 3</h2>
+          <label htmlFor="name">Name:</label>
+          <input type="text" id="name3" name="name" />
+          <select id="class3">
+            <option>Select Character Class...</option>
+            {characterClasses.map((CharacterClasses) => (
+              <option key={CharacterClasses} value={CharacterClasses}>
+                {CharacterClasses}
+              </option>
+            ))}
+          </select>
+        </section>
+        <section>
+          <h2 className="card-title">Party Member 4</h2>
+          <label htmlFor="name">Name:</label>
+          <input type="text" id="name4" name="name" />
+          <select id="class4">
+            <option>Select Character Class...</option>
+            {characterClasses.map((CharacterClasses) => (
+              <option key={CharacterClasses} value={CharacterClasses}>
+                {CharacterClasses}
+              </option>
+            ))}
+          </select>
+        </section>
+        <button type="submit">Submit</button>
+      </form>
+ 
+ 
+    <button type="button">Create Party</button>
+  </div>
+);
+}
+export default ClassForm;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // function  ClassForm(){
 //     const [input, setInput] = useState('');
 // let [characterClass, setCharacterClass] = useState('');
 
-const ClassType =['Range','Melee','Support','Tank']
+// const ClassType =['Range','Melee','Support','Tank']
+//   const [characters, setCharacter] = useState([]);
+//   const [input, setInput] = useState('');
+//   const [characterClass, setCharacterClass] = useState('');
 
+//   const classOptions = ['Wizard', 'Ranger', 'Rogue', 'Barbarian', 'Cleric', 'Druid', 'Fighter', 'Paladin'];
 
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
 
+//     setInput('');
+//     setCharacterClass('');
+//   };
 
-function ClassForm({handleProgChange}) {
-  const [characters, setCharacter] = useState([]);
-  const [input, setInput] = useState('');
-  const [characterClass, setCharacterClass] = useState('');
+//   const handleChange = (e) => {
+//     setInput(e.target.value);
+//   };
 
-  const classOptions = ['Wizard', 'Ranger', 'Rogue', 'Barbarian', 'Cleric', 'Druid', 'Fighter', 'Paladin'];
+//   const handleClassChange = (value) => {
+//     setCharacterClass(value);
+//   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    setInput('');
-    setCharacterClass('');
-  };
-
-  const handleChange = (e) => {
-    setInput(e.target.value);
-  };
-
-  const handleClassChange = (value) => {
-    setCharacterClass(value);
-  };
-
-  return (
-    <div>
-      <form className="character-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Name your character"
-          value={input}
-          name="text"
-          className="character-input"
-          onChange={handleChange}
-        />
-        <div className="dropdown">
-          <button className={`dropbtn ${characterClass}`}>
-            {characterClass || 'ClassType'}
-          </button>
-          <div className="dropdown-content">
-            {classOptions.map((option) => (
-              <p key={option} onClick={() => handleClassChange(option)}>
-                {option}
-              </p>
-            ))}
-          </div>
-        </div>
-        <button className="party-button">Add Character to party</button>
-      </form>
-      <div className="dropdown">
-        <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Character Select
-        </button>
-        <ul className="dropdown-menu">
-          <li>
-            <a className="dropdown-item" href="#">Ranged</a>
-            <ul className="dropdown-menu">
-              <li><a className="dropdown-item" href="#">Wizard</a></li>
-              <li><a className="dropdown-item" href="#">Ranger</a></li>
-            </ul>
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">Melee</a>
-            <ul className="dropdown-menu">
-              <li><a className="dropdown-item" href="#">Barbarian</a></li>
-              <li><a className="dropdown-item" href="#">Rogue</a></li>
-            </ul>
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">Support</a>
-            <ul className="dropdown-menu">
-              <li><a className="dropdown-item" href="#">Cleric</a></li>
-              <li><a className="dropdown-item" href="#">Druid</a></li>
-            </ul>
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">Tank</a>
-            <ul className="dropdown-menu">
-              <li><a className="dropdown-item" href="#">Fighter</a></li>
-              <li><a className="dropdown-item" href="#">Paladin</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </div>
-  );
-};
-export default ClassForm;
+//   return (
+//     <div>
+//       <form className="character-form" onSubmit={handleSubmit}>
+//         <input
+//           type="text"
+//           placeholder="Name your character"
+//           value={input}
+//           name="text"
+//           className="character-input"
+//           onChange={handleChange}
+//         />
+//         <div className="dropdown">
+//           <button className={`dropbtn ${characterClass}`}>
+//             {characterClass || 'ClassType'}
+//           </button>
+//           <div className="dropdown-content">
+//             {classOptions.map((option) => (
+//               <p key={option} onClick={() => handleClassChange(option)}>
+//                 {option}
+//               </p>
+//             ))}
+//           </div>
+//         </div>
+//         <button className="party-button">Add Character to party</button>
+//       </form>
+//       <div className="dropdown">
+//         <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+//           Character Select
+//         </button>
+//         <ul className="dropdown-menu">
+//           <li>
+//             <a className="dropdown-item" href="#">Ranged</a>
+//             <ul className="dropdown-menu">
+//               <li><a className="dropdown-item" href="#">Wizard</a></li>
+//               <li><a className="dropdown-item" href="#">Ranger</a></li>
+//             </ul>
+//           </li>
+//           <li>
+//             <a className="dropdown-item" href="#">Melee</a>
+//             <ul className="dropdown-menu">
+//               <li><a className="dropdown-item" href="#">Barbarian</a></li>
+//               <li><a className="dropdown-item" href="#">Rogue</a></li>
+//             </ul>
+//           </li>
+//           <li>
+//             <a className="dropdown-item" href="#">Support</a>
+//             <ul className="dropdown-menu">
+//               <li><a className="dropdown-item" href="#">Cleric</a></li>
+//               <li><a className="dropdown-item" href="#">Druid</a></li>
+//             </ul>
+//           </li>
+//           <li>
+//             <a className="dropdown-item" href="#">Tank</a>
+//             <ul className="dropdown-menu">
+//               <li><a className="dropdown-item" href="#">Fighter</a></li>
+//               <li><a className="dropdown-item" href="#">Paladin</a></li>
+//             </ul>
+//           </li>
+//         </ul>
+//       </div>
+//     </div>
+//   );
+// };
+// export default ClassForm;
 
 
 {/* 

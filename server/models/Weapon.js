@@ -9,7 +9,7 @@ damage:{
     type: Array,
     require: true,
 },
-class:{
+characterClass:{
     type: String,
     require: true,
 },

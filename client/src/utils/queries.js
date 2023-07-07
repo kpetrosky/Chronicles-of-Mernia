@@ -9,3 +9,13 @@ export const QUERY_SINGLE_USER = gql`
     }
   }
 `;
+
+export const QUERY_WEAPONS = gql`
+  query weapons {
+    weapons {
+      _id
+      damage
+      characterClass
+    }
+  }
+`

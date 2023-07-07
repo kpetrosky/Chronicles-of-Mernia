@@ -7,7 +7,7 @@ const partyMemberSchema = new Schema({
     unique: true,
     trim: true,
   },
-  class: {
+  characterClass: {
     type: String,
     required: true,
   },
