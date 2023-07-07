@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_USER, LOGIN_USER } from '../../utils/mutations';
 import Auth from '../../utils/auth';
+import "./signUp.css";
+// import image from "../../images/testForest.jpg";
 
 
 export default function SignUp({handleProgChange}) {
@@ -61,27 +63,34 @@ export default function SignUp({handleProgChange}) {
 
     
     return (
-        <div>
+        <div className="signup-div">
             <form>
-                <h2>Join the Battle!</h2>
-                <input 
-                    className="username-input" 
-                    placeholder="Username"
-                    name="username"
-                    type="text"
-                    value={formState.username}
-                    onChange={handleChange}
-                    />
-                <input 
-                    className="password-input" 
-                    placeholder="******"
-                    name="password"
-                    type="password" 
-                    value={formState.password}
-                    onChange={handleChange}
-                    />
-                <button type="submit" id="login-btn" onClick={handleFormSubmit}>Login</button>
-                <button type="submit" id="signUp-btn" onClick={handleFormSubmit}>Sign Up</button>
+                <h2 className="signup-h2">Join the Battle!</h2>
+                <div className='signup-boxes'>
+                    <div className='login-box'>
+                        <button type="submit" id="login-btn" onClick={handleFormSubmit}>Login</button>
+                    </div>
+                    <div className='signUp-box'>
+                        <button type="submit" id="signUp-btn" onClick={handleFormSubmit}>Sign Up</button>
+                    </div>
+                    <input 
+                        className="username-input" 
+                        placeholder="Username"
+                        name="username"
+                        type="text"
+                        value={formState.username}
+                        onChange={handleChange}
+                        />
+                    <input 
+                        className="password-input" 
+                        placeholder="******"
+                        name="password"
+                        type="password" 
+                        value={formState.password}
+                        onChange={handleChange}
+                        />
+                    
+                </div>
             </form>
         </div>
     )
