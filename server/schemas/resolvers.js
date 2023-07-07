@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User } = require('../models');
+const { User, Weapon, PartyMember, Party } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -7,6 +7,9 @@ const resolvers = {
     user: async (parent, { userId }) => {
       return User.findOne({ _id: userId});
     },
+    weapons: async (parent, args) => {
+      return Weapon.find({});
+    }
   },
 
   Mutation: {
@@ -31,6 +34,46 @@ const resolvers = {
 
       const token = signToken(user);
       return { token, user };
+    },
+    addPartyMember: async (parent, { 
+      name,
+      characterClass,
+      special,
+      maxHp,
+      currentHp,
+      attack,
+      defense,
+      speed,
+      dodge,
+      weapon,
+      position
+     }) => {
+      const partyMember = {
+        name,
+        characterClass,
+        special,
+        maxHp,
+        currentHp,
+        attack,
+        defense,
+        speed,
+        dodge,
+        weapon,
+        position
+      };
+      const newPartyMember = await PartyMember.create(partyMember);
+      await newPartyMember.populate('weapon');
+      return newPartyMember;
+    },
+    addParty: async (parent, { members }) => {
+      const newParty = await Party.create({ members })
+      return newParty;
+    },
+    updateUserParty: async (parent, { party }, context) => {
+      if (context.user) {
+        return User.findOneAndUpdate({ _id: context.user._id }, { $set: { party } }, { new: true });
+      }
+      throw new AuthenticationError('You need to be logged in!');
     },
   },
 };

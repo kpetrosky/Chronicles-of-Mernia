@@ -5,7 +5,34 @@ const typeDefs = gql`
     _id: ID
     username: String
     password: String
+    party: Party
     progression: Int
+  }
+
+  type Weapon {
+    _id: ID
+    damage: [Int]
+    characterClass: String
+  }
+
+  type PartyMember {
+    _id: ID!
+    name: String!
+    characterClass: String!
+    special: Int!
+    maxHp: Int!
+    currentHp: Int!
+    attack: Int!
+    defense: Int!
+    speed: [Int!]!
+    dodge: Int!
+    weapon: Weapon!
+    position: Int!
+  }
+
+  type Party {
+    _id: ID!
+    members: [ID!]
   }
 
   type Auth {
@@ -15,12 +42,26 @@ const typeDefs = gql`
 
   type Query {
     user(userId: ID!): User
+    weapons: [Weapon]
   }
 
   type Mutation {
     addUser(username: String, password: String, progression: Int): Auth
     login(username: String, password: String): Auth
-
+    addPartyMember(
+      name: String!
+      characterClass: String!
+      special: Int!
+      maxHp: Int!
+      currentHp: Int!
+      attack: Int!
+      defense: Int!
+      speed: [Int!]!
+      dodge: Int!
+      weapon: ID!
+      position: Int!): PartyMember
+    addParty(members: [ID!]): Party
+    updateUserParty(party: ID!): User
   }
 `;
 
