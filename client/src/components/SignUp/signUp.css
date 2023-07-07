@@ -1,0 +1,54 @@
+/* body {
+    display: flex;
+    justify-content: center;
+    background-image: url(../../images/testForest.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: 'Cinzel', serif;
+} */
+
+.signup-div {
+  display: flex;
+  font-family: 'Cinzel', serif;
+  
+}
+
+.signup-h2 {
+   font-size: xx-large;
+   margin-top: -40%;
+   text-align: center;
+
+}
+
+.signup-boxes {
+  display: flex;
+  border: 2px solid black;
+  flex-direction: column;
+}
+
+.login-box {
+  display: flex;
+  width: 50%;
+}
+
+.signUp-box {
+  display: flex;
+  width: 50%;
+}
+/* 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Dancing+Script&family=Pacifico&family=Tilt+Prism&display=swap" rel="stylesheet"> */
+
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Dancing+Script&family=Pacifico&family=Tilt+Prism&display=swap');
+
+
+
+/* font-family: 'Cinzel', serif;
+font-family: 'Dancing Script', cursive;
+font-family: 'Pacifico', cursive;
+font-family: 'Tilt Prism', cursive; */
+

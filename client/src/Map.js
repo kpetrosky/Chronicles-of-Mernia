@@ -5,6 +5,7 @@ import SignUp from './components/SignUp';
 import CreateParty from './components/CreateParty';
 import Combat from './components/Combat';
 import GameOver from './components/GameOver';
+import './styles/map.css';
 
 export default function Map() {
     const [progression, setProgression] = useState(0);
@@ -41,10 +42,12 @@ export default function Map() {
     const handleProgChange = (prog) => setProgression(prog);
 
     return (
-    <div>
-        <Header />
-        {renderComponent()}
-        <Footer />
+    <div className='map-main'>
+        <Header className='header'/>
+            <div className='container-main'>
+                {renderComponent()}
+            </div>
+        <Footer className='footer'/>
     </div>
     );
 }

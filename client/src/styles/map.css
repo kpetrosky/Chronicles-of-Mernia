@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Dancing+Script&family=Pacifico&family=Tilt+Prism&display=swap');
+
+.map-main {
+    background-image: url(../images/testForest.jpg);
+    background-size: cover;
+    border-radius: 25px;
+    border: 5px solid black;
+}
+
+.header {
+    text-align: center;
+    font-size: xx-large;
+    padding: 1%;
+    font-family: 'Cinzel', serif;
+    color: black;
+    text-shadow: 0 0 25px rgb(241, 249, 16); 
+    
+    
+}
+
+.container-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid black;
+    padding-bottom: 18%;
+    padding-top: 15%;
+    margin-right: 7%;
+    margin-left: 7%;
+    background-color: rgb(211, 211, 211, 0.6);
+    border-radius: 25px;
+}
+
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    font-size: medium;
+    color: white;
+    text-shadow: 0 0 30px rgb(0, 0, 0); 
+    padding: 3%;
+    
+}

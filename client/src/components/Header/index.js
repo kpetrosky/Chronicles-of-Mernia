@@ -2,8 +2,8 @@ import React from 'react';
 
 export default function Header() {
     return (
-        <div>
-            <h1>Header</h1>
+        <div className='header'>
+            <h1>Chronicles of MERNia</h1>
         </div>
     )
 }
