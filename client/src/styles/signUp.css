@@ -10,31 +10,85 @@
 .signup-div {
   display: flex;
   font-family: 'Cinzel', serif;
-  
+  justify-content: center;
+  padding-top: 1%;
+  position: relative;
+}
+
+.form-div {
+  justify-content: center;
+  /* border: 5px solid black; */
+  border-radius: 25px;
+  height: 30rem;
 }
 
 .signup-h2 {
    font-size: xx-large;
-   margin-top: -40%;
    text-align: center;
-
+   height: 1rem;
 }
 
 .signup-boxes {
   display: flex;
-  border: 2px solid black;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  height: 18rem;
+  
+  /* border: 2px solid black; */
 }
 
 .login-box {
   display: flex;
-  width: 50%;
+  flex-wrap: wrap;
+  justify-content: center;
+  border: 3px solid black;
+  width: 40%;
+
 }
 
 .signUp-box {
   display: flex;
-  width: 50%;
+  flex-wrap: wrap;
+  justify-content: center;
+  border: 3px solid black;
+  width: 40%;
+  
 }
+
+.username-input {
+  width: 90%;
+  height: 2rem;
+  margin-top: 2rem;
+}
+
+.password-input {
+  width: 90%;
+  height: 2rem;
+}
+
+#login-btn {
+  width: 65%;
+  margin: 2%;
+  margin-top: 2rem;
+  font-family: "Cinzel", "serif";
+  font-weight: bolder;
+  font-size: larger;
+}
+
+#signUp-btn {
+  width: 65%;
+  margin: 2%;
+  margin-top: 2rem;
+  font-family: "Cinzel", "serif";
+  font-weight: bolder;
+  font-size: larger;
+}
+
+
+
+
 /* 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
