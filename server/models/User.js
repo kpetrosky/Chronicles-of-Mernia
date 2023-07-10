@@ -20,6 +20,7 @@ const userSchema = new Schema({
   progression: {
     type: Number,
     required: true,
+    default: 0
   }
  });
 
