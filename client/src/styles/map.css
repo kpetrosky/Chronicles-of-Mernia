@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Dancing+Script&family=Pacifico&family=Tilt+Prism&display=swap');
 
 .map-main {
-    background-image: url(../images/testForest.jpg);
+    background-image: url(../images/dungeonKind.jpeg);
     background-size: cover;
-    border-radius: 25px;
-    border: 5px solid black;
+    /* border-radius: 25px; */
+    /* border: 5px solid black; */
+    align-items: center;
 }
 
 .header {

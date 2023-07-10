@@ -41,6 +41,7 @@ export default function Map() {
 
     const handleProgChange = (prog) => setProgression(prog);
 
+    //if we can instead of hard coding 'map-main for className set it up so it takes the component title that is rendered 
     return (
     <div className='map-main'>
         <Header className='header'/>
