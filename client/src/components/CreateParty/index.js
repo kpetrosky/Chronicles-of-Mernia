@@ -224,8 +224,8 @@ function ClassForm({handleProgChange}) {
           </div>
         </section>
       <div className="buttons">
-        <button id="submit-btn" type="submit">Submit</button>
-        <button id="create-btn" type="submit">Create Party</button>
+        {/* <button id="submit-btn" type="submit">Submit</button> */}
+        <button id="create-btn" type="submit" onClick={handleFormSubmit}>Create Party</button>
       </div>
       </form>
   </div>

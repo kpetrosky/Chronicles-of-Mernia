@@ -26,6 +26,8 @@
    font-size: xx-large;
    text-align: center;
    height: 1rem;
+   color: #174d24;
+   font-weight: bold;
 }
 
 .signup-boxes {
@@ -65,7 +67,7 @@
     /* border-radius: 4px; */
     /* border: 2px solid #5d0cff; */
     outline: none;
-    background:transparent;
+    background:white;
 }
 .username-input::placeholder {
     color:black;
@@ -75,7 +77,7 @@
     /* border-radius: 4px; */
     /* border: 2px solid #5d0cff; */
     outline: none;
-    background: transparent;
+    background: white;
 }
 .password-input::placeholder {
     color: black;
