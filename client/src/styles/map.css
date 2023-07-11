@@ -12,17 +12,14 @@
 }
 
 .main-1 {
-    background-image: url(../images/dndparty4.jpg);
+    background-image: url(../images/Tavern.jpeg);
     background-size: cover;
-    background-repeat: no-repeat;
     border-radius: 25px;
     border: 5px solid black;
-    height: max-content;
+    height: fit-content;
     width: 100%;
     align-items: center;
-    padding-bottom: 3%;
 }
-
 .main-2 {
     background-image: url(../images/testForest.jpg);
     background-size: cover;
@@ -117,12 +114,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* border: 5px solid rgb(169, 174, 192); */
+    border: 5px solid rgb(163, 22, 22);
     padding-bottom: 1.5%;
     padding-top: 1%;
     margin-right: 7%;
     margin-left: 7%;
-    /* background-color: rgba(13, 7, 94, 0.284); */
+    background-color: rgba(108, 20, 20, 0.507);
     border-radius: 25px;
     position: relative;
 }

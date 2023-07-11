@@ -15,8 +15,8 @@
     text-align: center;
     font-size: 4vw;
     height: 1rem;
-    color: rgb(0, 0, 0);
-    text-shadow: 0 0 25px rgb(252, 252, 252);
+    margin-bottom: 5%;
+   color: rgb(151, 119, 31);
 }
 
 .classes-div {
@@ -27,7 +27,8 @@
 }
 
 .members {
-    /* justify-content: space-around; */
+    justify-content: space-around;
+    flex-direction: row;
     flex-wrap: wrap;
     border: 4px solid rgb(0, 0, 0);
     height: 16vw;
@@ -68,11 +69,12 @@
   width:100%;
   height: 2vw;
   margin-left: .1rem;
+  color: rgb(151, 119, 31);
 }
 
 .name-text {
   width: 70%;
-  font-size: 2vw;
+  font-size: 1vw;
   height: 1.5vw;
   margin-left: .2rem;
   /* margin-bottom: .5rem; */
@@ -83,28 +85,37 @@
   font-size: 1vw;
   height: 2vw;
   margin-left: .2rem;
+  background: rgb(151, 119, 31);
 }
 
 
 .card-title {
     font-size: 2.5vw;
     margin: .1rem;
+    color: rgb(151, 119, 31);
 }
 
 
 
 #member-1 {
     width: 33%;
+    margin-left:3%;
+   
 }
 
 #member-2 {
     width: 33%;
+    margin-left: .5%;
+    margin-right:25%;
 }
 #member-3 {
     width: 33%;
+    margin-left:3%;
 }
 #member-4 {
     width: 33%;
+    margin-left: .5%;
+    margin-right:25%;
 }
 
 
@@ -117,25 +128,14 @@
 }
 
 /* #submit-btn {
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  outline: none;
-  background: #3e0606;
-  color: #fff;
-  text-transform: capitalize;
-  width: 40%;
+    width: 20%;
+    margin: .5%;
+    margin-top: 2%;
   } */
 
 #create-btn {
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    outline: none;
-    background-image: linear-gradient(to right, rgb(255, 255, 255, .7), rgb(209, 207, 78, .9));
-    color: black;
-    text-transform: capitalize;
-    width: 40%;
+   
+    margin: .5%;
+    background:rgb(151, 119, 31) ;
+    color: white;
   }
