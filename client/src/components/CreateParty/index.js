@@ -3,6 +3,7 @@ import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_WEAPONS } from '../../utils/queries';
 import { ADD_PARTY_MEMBER, ADD_PARTY, UPDATE_USER_PARTY } from '../../utils/mutations';
 import { findBaseStats } from '../../utils/baseStats';
+import "../../styles/party.css";
 
 
 function ClassForm({handleProgChange}) {
@@ -137,65 +138,91 @@ function ClassForm({handleProgChange}) {
   const characterClasses = ["Barbarian", "Rogue", "Ranger", "Wizard", "Cleric", "Druid", "Paladin", "Fighter"]
 
   return (
-  <div>
-      <form onSubmit={handleFormSubmit}>
-        <section>
+  <div className="party-main">
+      <h2 className="party-h2">Create Your Party!</h2>
+      <form className="classes-div" onSubmit={handleFormSubmit}>
+        <section className="members" id="member-1">
           <h2 className="card-title">Party Member 1</h2>
-          <label htmlFor="name">Name:</label>
-          <input type="text" id="name1" name="name" />
-          <select id="class1">
-            <option>Select Character Class...</option>
-            {characterClasses.map((CharacterClasses) => (
-              <option key={CharacterClasses} value={CharacterClasses}>
+          <div className="member-box">
+            <div className="party-info">
+              <label htmlFor="name" id="label1">Name:</label>
+              <input type="text" className="name-text" id="name1" name="name" />
+              <select className="party-class" id="class1">
+              <option>Select Class...</option>
+                {characterClasses.map((CharacterClasses) => (
+                <option key={CharacterClasses} value={CharacterClasses}>
                 {CharacterClasses}
               </option>
-            ))}
-          </select>
+              ))}
+              </select>
+            </div>
+            <div className="party-pic">
+            </div>   
+          </div>
         </section>
-        <section>
+        <section className="members" id="member-2">
           <h2 className="card-title">Party Member 2</h2>
-          <label htmlFor="name">Name:</label>
-          <input type="text" id="name2" name="name" />
-          <select id="class2">
-            <option>Select Character Class...</option>
-            {characterClasses.map((CharacterClasses) => (
-              <option key={CharacterClasses} value={CharacterClasses}>
+          <div className="member-box">
+            <div className="party-info">
+              <label htmlFor="name" id="label1">Name:</label>
+              <input type="text" className="name-text" id="name2" name="name" />
+              <select className="party-class" id="class2">
+              <option>Select Class...</option>
+                {characterClasses.map((CharacterClasses) => (
+                <option key={CharacterClasses} value={CharacterClasses}>
                 {CharacterClasses}
               </option>
-            ))}
-          </select>
+              ))}
+              </select>
+            </div>
+            <div className="party-pic">
+            </div>
+          </div>
         </section>
-        <section>
+        <section className="members" id="member-3">
           <h2 className="card-title">Party Member 3</h2>
-          <label htmlFor="name">Name:</label>
-          <input type="text" id="name3" name="name" />
-          <select id="class3">
-            <option>Select Character Class...</option>
-            {characterClasses.map((CharacterClasses) => (
-              <option key={CharacterClasses} value={CharacterClasses}>
+          <div className="member-box">
+            <div className="party-info">
+              <label htmlFor="name">Name:</label>
+              <input type="text" className="name-text" id="name3" name="name" />
+              <select className="party-class" id="class3">
+              <option>Select Character Class...</option>
+                {characterClasses.map((CharacterClasses) => (
+                <option key={CharacterClasses} value={CharacterClasses}>
                 {CharacterClasses}
               </option>
-            ))}
-          </select>
+              ))}
+              </select>
+            </div>
+            <div className="party-pic">
+            </div>
+          </div>
         </section>
-        <section>
+        <section className="members" id="member-4">
           <h2 className="card-title">Party Member 4</h2>
-          <label htmlFor="name">Name:</label>
-          <input type="text" id="name4" name="name" />
-          <select id="class4">
-            <option>Select Character Class...</option>
-            {characterClasses.map((CharacterClasses) => (
-              <option key={CharacterClasses} value={CharacterClasses}>
+          <div className="member-box">
+            <div className="party-info">
+              <label htmlFor="name">Name:</label>
+              <input type="text" className="name-text" id="name4" name="name" />
+              <select className="party-class" id="class4">
+              <option>Select Character Class...</option>
+                {characterClasses.map((CharacterClasses) => (
+                <option key={CharacterClasses} value={CharacterClasses}>
                 {CharacterClasses}
               </option>
-            ))}
-          </select>
+              ))}
+              </select>
+            </div>
+            <div className="party-pic">
+            </div>
+          </div>
         </section>
-        <button type="submit">Submit</button>
       </form>
- 
- 
-    <button type="button">Create Party</button>
+      <div className="buttons">
+        <button id="submit-btn" type="submit">Submit</button>
+        <button id="create-btn" type="button">Create Party</button>
+      </div>
+      
   </div>
 );
 }
