@@ -1,0 +1,40 @@
+/* CSS for gameover screen */
+.gameover-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999; /* Make sure the gameover screen appears on top of other elements */
+  }
+  
+  .gameover-screen h1 {
+    color: #fff; /* Text color */
+    font-size: 32px;
+    margin-bottom: 16px;
+  }
+  
+  .gameover-screen p {
+    color: #fff; /* Text color */
+    font-size: 20px;
+    margin-bottom: 32px;
+  }
+  
+  .gameover-screen button {
+    padding: 12px 24px;
+    font-size: 18px;
+    background-color: #fff;
+    color: #000; /* Text color */
+    border: none;
+    cursor: pointer;
+  }
+  
+  .gameover-screen button:hover {
+    background-color: #ccc;
+  }
+  
