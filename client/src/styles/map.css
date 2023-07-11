@@ -3,6 +3,7 @@
 .main-0 {
     background-image: url(../images/dungeonKind.jpeg);
     background-size: cover;
+    background-position: center;
     border-radius: 25px;
     border: 5px solid black;
     height: fit-content;
@@ -28,6 +29,7 @@
     width: 100%;
     align-items: center;
 }
+
 .main-3 {
     background-image: url(../images/testForest.jpg);
     background-size: cover;
@@ -37,6 +39,7 @@
     width: 100%;
     align-items: center;
 }
+
 .main-4 {
     background-image: url(../images/testForest.jpg);
     background-size: cover;
@@ -46,6 +49,7 @@
     width: 100%;
     align-items: center;
 }
+
 .main-5 {
     background-image: url(../images/testForest.jpg);
     background-size: cover;
@@ -55,7 +59,18 @@
     width: 100%;
     align-items: center;
 }
+
 .main-6 {
+    background-image: url(../images/testForest.jpg);
+    background-size: cover;
+    border-radius: 25px;
+    border: 5px solid black;
+    height: fit-content;
+    width: 100%;
+    align-items: center;
+}
+
+.main-7 {
     background-image: url(../images/testForest.jpg);
     background-size: cover;
     border-radius: 25px;
@@ -81,7 +96,21 @@
     
 }
 
-.container-main {
+.container-0 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: 5px solid rgb(155, 31, 31); */
+    padding-bottom: 1.5%;
+    padding-top: 1%;
+    margin-right: 7%;
+    margin-left: 7%;
+    /* background-color: rgba(85, 29, 29, 0.284); */
+    border-radius: 25px;
+    position: relative;
+}
+
+.container-1 {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -94,6 +123,22 @@
     border-radius: 25px;
     position: relative;
 }
+
+.container-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid rgb(213, 216, 28);
+    padding-bottom: 1.5%;
+    padding-top: 1%;
+    margin-right: 7%;
+    margin-left: 7%;
+    background-color: rgba(13, 7, 94, 0.284);
+    border-radius: 25px;
+    position: relative;
+}
+
+
 
 
 .footer {
