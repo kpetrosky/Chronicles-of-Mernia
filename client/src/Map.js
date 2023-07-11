@@ -50,7 +50,7 @@ export default function Map() {
     return (
     <div className={`main-${progression}`}>
         <Header className='header'/>
-            <div className='container-main'>
+            <div className={`container-${progression}`}>
                 {renderComponent()}
             </div>
         <Footer className='footer'/>

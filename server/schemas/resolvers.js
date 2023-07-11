@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Weapon, PartyMember, Party } = require('../models');
+const { User, Weapon, PartyMember, Party, Encounter } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -28,7 +28,6 @@ const resolvers = {
       return await Party.findOne({ _id });
     },
   },
-
   Mutation: {
     addUser: async (parent, { username, password, progression }) => {
       const user = await User.create({ username, password, progression });

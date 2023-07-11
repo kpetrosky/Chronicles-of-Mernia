@@ -8,7 +8,12 @@ const typeDefs = gql`
     party: Party
     progression: Int
   }
-
+ type Encounter {
+  _id: ID!
+  enemies: [String]
+  biome: String
+  progression: Int
+ }
   type Weapon {
     _id: ID
     name: String
