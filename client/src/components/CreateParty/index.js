@@ -99,6 +99,7 @@ function ClassForm({handleProgChange}) {
           const partyMemberId = response.data.addPartyMember._id;
           newPartyIds.push(partyMemberId);
         }
+        console.log(newPartyIds);
         const response = await addParty({
           variables: { members: newPartyIds },
         });
