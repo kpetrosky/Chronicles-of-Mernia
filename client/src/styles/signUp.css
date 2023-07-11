@@ -37,6 +37,8 @@
   height: 18rem;
   
   /* border: 2px solid black; */
+  /* border: 2px solid black; */
+  flex-direction: column;
 }
 
 .login-box {
@@ -47,6 +49,26 @@
   width: 40%;
 
 }
+.username-input{
+    padding: 10px;
+    /* border-radius: 4px; */
+    /* border: 2px solid #5d0cff; */
+    outline: none;
+    background:transparent;
+}
+.username-input::placeholder {
+    color:black;
+  }
+.password-input{
+    padding:10px;
+    /* border-radius: 4px; */
+    /* border: 2px solid #5d0cff; */
+    outline: none;
+    background: transparent;
+}
+.password-input::placeholder {
+    color: black;
+  }
 
 .signUp-box {
   display: flex;
@@ -56,39 +78,27 @@
   width: 40%;
   
 }
-
-.username-input {
-  width: 90%;
-  height: 2rem;
-  margin-top: 2rem;
+#login-btn{
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+  background: #3e0606;
+  color: #fff;
+  text-transform: capitalize;
 }
+#signUp-btn{
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+    background: #174d24;
+    color: #fff;
+    text-transform: capitalize;
 
-.password-input {
-  width: 90%;
-  height: 2rem;
 }
-
-#login-btn {
-  width: 65%;
-  margin: 2%;
-  margin-top: 2rem;
-  font-family: "Cinzel", "serif";
-  font-weight: bolder;
-  font-size: larger;
-}
-
-#signUp-btn {
-  width: 65%;
-  margin: 2%;
-  margin-top: 2rem;
-  font-family: "Cinzel", "serif";
-  font-weight: bolder;
-  font-size: larger;
-}
-
-
-
-
 /* 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
