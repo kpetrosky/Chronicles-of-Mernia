@@ -1,16 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Dancing+Script&family=Pacifico&family=Tilt+Prism&display=swap');
 
-.map-main {
+.main-0 {
     background-image: url(../images/dungeonKind.jpeg);
     background-size: cover;
     border-radius: 25px;
     border: 5px solid black;
     height: fit-content;
     width: 100%;
-    /* border-radius: 25px; */
-    /* border: 5px solid black; */
     align-items: center;
 }
+
+.main-1 {
+    background-image: url(../images/testForest.jpg);
+    background-size: cover;
+    border-radius: 25px;
+    border: 5px solid black;
+    height: fit-content;
+    width: 100%;
+    align-items: center;
+}
+
+
 
 .header {
     display: flex;
@@ -30,12 +40,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 5px solid black;
+    border: 5px solid rgb(155, 31, 31);
     padding-bottom: 1.5%;
     padding-top: 1%;
     margin-right: 7%;
     margin-left: 7%;
-    background-color: rgb(211, 211, 211, 0.6);
+    background-color: rgba(85, 29, 29, 0.284);
     border-radius: 25px;
     position: relative;
 }
