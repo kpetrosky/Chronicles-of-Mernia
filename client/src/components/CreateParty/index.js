@@ -47,22 +47,22 @@ function ClassForm({handleProgChange}) {
       {
         name: name1.trim(),
         characterClass: characterClass1,
-        position: 5
+        position: 1
       },
       {
         name: name2.trim(),
         characterClass: characterClass2,
-        position: 6
+        position: 2
       },
       {
         name: name3.trim(),
         characterClass: characterClass3,
-        position: 7
+        position: 3
       },
       {
         name: name4.trim(),
         characterClass: characterClass4,
-        position: 8
+        position: 4
       }
     ];
     
@@ -195,7 +195,7 @@ function ClassForm({handleProgChange}) {
       </form>
  
  
-    <button type="button">Create Party</button>
+    <button type="button" onClick={handleProgChange(2)}>Create Party</button>
   </div>
 );
 }
