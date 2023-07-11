@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_WEAPONS } from '../../utils/queries';
-import { ADD_PARTY_MEMBER, ADD_PARTY, UPDATE_USER_PARTY } from '../../utils/mutations';
+import { ADD_PARTY_MEMBER, ADD_PARTY, UPDATE_USER_PARTY, UPDATE_USER_PROGRESSION } from '../../utils/mutations';
 import { findBaseStats } from '../../utils/baseStats';
 import "../../styles/party.css";
 
@@ -22,6 +22,7 @@ function ClassForm({handleProgChange}) {
   const [addPartyMember] = useMutation(ADD_PARTY_MEMBER);
   const [addParty] = useMutation(ADD_PARTY);
   const [updateUserParty] = useMutation(UPDATE_USER_PARTY);
+  const [updateUserProgression] = useMutation(UPDATE_USER_PROGRESSION);
 
   const weapons = weaponsData?.weapons || [];
 
@@ -107,6 +108,11 @@ function ClassForm({handleProgChange}) {
           variables: { party: newPartyId },
         });
         console.log('Party Members Added!');
+
+        await updateUserProgression({
+          variables: { progression: 2 }
+        });
+        handleProgChange(2);
       } catch (error) {
         console.error("Error adding Party Members:", error)
       }
@@ -217,11 +223,11 @@ function ClassForm({handleProgChange}) {
             </div>
           </div>
         </section>
-      </form>
       <div className="buttons">
         <button id="submit-btn" type="submit">Submit</button>
-        <button id="create-btn" type="button">Create Party</button>
+        <button id="create-btn" type="submit">Create Party</button>
       </div>
+      </form>
   </div>
 );
 }

@@ -4,8 +4,10 @@ const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
-    user: async (parent, { userId }) => {
-      return User.findOne({ _id: userId});
+    user: async (parent, args, context) => {
+      if (context.user) {
+        return User.findOne({ _id: context.user._id });
+      }
     },
     weapons: async (parent, args) => {
       return Weapon.find({});
@@ -72,6 +74,12 @@ const resolvers = {
     updateUserParty: async (parent, { party }, context) => {
       if (context.user) {
         return User.findOneAndUpdate({ _id: context.user._id }, { $set: { party } }, { new: true });
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    updateUserProgression: async (parent, { progression }, context) => {
+      if (context.user) {
+        return User.findOneAndUpdate({ _id: context.user._id }, { $set: { progression } }, { new: true });
       }
       throw new AuthenticationError('You need to be logged in!');
     },
