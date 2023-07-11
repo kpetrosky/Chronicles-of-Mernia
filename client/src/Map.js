@@ -43,7 +43,7 @@ export default function Map() {
 
     //if we can instead of hard coding 'map-main for className set it up so it takes the component title that is rendered 
     return (
-    <div className='map-main'>
+    <div className={`main-${progression}`}>
         <Header className='header'/>
             <div className='container-main'>
                 {renderComponent()}
@@ -51,4 +51,7 @@ export default function Map() {
         <Footer className='footer'/>
     </div>
     );
+
+
 }
+
