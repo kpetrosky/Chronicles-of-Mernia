@@ -7,7 +7,7 @@ import {
 import { QUERY_USER } from '../../utils/queries';
 import { UPDATE_USER_PROGRESSION } from '../../utils/mutations';
 
-export default function Combat({handleProgChange}) {
+export default function Combat({handleProgChange, encounter}) {
     const [initiativeState, setInitiativeState] = useState([]);
     const [positions, setPositions] = useState([]);
     const [buttonsClickable, setButtonsClickable] = useState(false);
@@ -102,43 +102,43 @@ export default function Combat({handleProgChange}) {
             }
         }
 
-        const exampleEncounter = {
-            encounter: {
-                _id: 9,
-                enemies: [
-                    {
-                        _id: 99,
-                        name: "Giant Wasp",
-                        attack: 10,
-                        hp: 8,
-                        speed: [3,5]
-                    },
-                    {
-                        _id: 99,
-                        name: "Giant Wasp",
-                        attack: 10,
-                        hp: 8,
-                        speed: [3,5]
-                    },
-                    {
-                        _id: 98,
-                        name: "Kobold",
-                        attack: 15,
-                        hp: 10,
-                        speed: [6,8]
-                    },
-                    {
-                        _id: 97,
-                        name: "Vulture",
-                        attack: 20,
-                        hp: 12,
-                        speed: [1,3]
-                    }
-                ],
-                biome: 'Forest',
-                progression: 2
-            }
-        }
+        // const exampleEncounter = {
+        //     encounter: {
+        //         _id: 9,
+        //         enemies: [
+        //             {
+        //                 _id: 99,
+        //                 name: "Giant Wasp",
+        //                 attack: 10,
+        //                 hp: 8,
+        //                 speed: [3,5]
+        //             },
+        //             {
+        //                 _id: 99,
+        //                 name: "Giant Wasp",
+        //                 attack: 10,
+        //                 hp: 8,
+        //                 speed: [3,5]
+        //             },
+        //             {
+        //                 _id: 98,
+        //                 name: "Kobold",
+        //                 attack: 15,
+        //                 hp: 10,
+        //                 speed: [6,8]
+        //             },
+        //             {
+        //                 _id: 97,
+        //                 name: "Vulture",
+        //                 attack: 20,
+        //                 hp: 12,
+        //                 speed: [1,3]
+        //             }
+        //         ],
+        //         biome: 'Forest',
+        //         progression: 2
+        //     }
+        // }
 
         function battleReadyParty(party) {
             const partyMembers = party.user.party.members;
@@ -154,7 +154,7 @@ export default function Combat({handleProgChange}) {
         };
 
         function battleReadyEncounter(encounter) {
-            const enemies = encounter.encounter.enemies;
+            const enemies = encounter.enemies;
             return enemies.map((object) => {
                 const position = enemies.indexOf(object) + 5;
                 const { hp } = object;
@@ -168,7 +168,7 @@ export default function Combat({handleProgChange}) {
             });
         };
 
-        const battleArray = battleReadyParty(exampleParty).concat(battleReadyEncounter(exampleEncounter));
+        const battleArray = battleReadyParty(exampleParty).concat(battleReadyEncounter(encounter));
 
         function updateSpeed(battleArray) {
             return battleArray.map((object) => {
