@@ -63,6 +63,7 @@ const typeDefs = gql`
       weapon: ID!
       position: Int!): PartyMember
     addParty(members: [ID!]): Party
+    updatePartyMemberHp(_id: ID!, currentHp: Int!): PartyMember
     updateUserParty(party: ID!): User
     updateUserProgression(progression: Int): User
   }

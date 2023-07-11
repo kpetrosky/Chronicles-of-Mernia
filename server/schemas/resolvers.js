@@ -103,6 +103,9 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
+    updatePartyMemberHp: async (parent, { _id, currentHp }) => {
+      return PartyMember.findOneAndUpdate({ _id }, { $set: { currentHp }}, { new: true });
+    },
   },
 };
 

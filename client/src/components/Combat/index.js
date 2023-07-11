@@ -5,19 +5,17 @@ import {
     letThatSinkIn,
 } from '../../utils/combat';
 import { QUERY_USER } from '../../utils/queries';
-import { UPDATE_USER_PROGRESSION } from '../../utils/mutations';
+import { UPDATE_USER_PROGRESSION, UPDATE_PARTY_MEMBER_HP } from '../../utils/mutations';
 
 export default function Combat({handleProgChange, encounter}) {
     const [initiativeState, setInitiativeState] = useState([]);
     const [positions, setPositions] = useState([]);
     const [buttonsClickable, setButtonsClickable] = useState(false);
-    const [isSpecial, setIsSpecial] = useState('');
     
     const { data: userData } = useQuery(QUERY_USER);
     
     const [updateUserProgression] = useMutation(UPDATE_USER_PROGRESSION);
-    
-    console.log(userData);
+    const [updatePartyMemberHp] = useMutation(UPDATE_PARTY_MEMBER_HP);
     
     useEffect(() => {
         function battleReadyParty(party) {
@@ -28,7 +26,8 @@ export default function Combat({handleProgChange, encounter}) {
                     isBlocking: false,
                     isDown: false,
                     isPlayer: true,
-                    specialUsed: false
+                    specialUsed: false,
+                    specialUsedThisTurn: false
                 }
             });
         };
@@ -83,8 +82,6 @@ export default function Combat({handleProgChange, encounter}) {
 
     const initiativeCopy = [...initiativeState];
 
-    console.log(initiativeCopy);
-
     const handleAction = async (event) => {
         if (event.target.id === 'attack') {
             initiativeCopy[0].isBlocking = false;
@@ -94,12 +91,12 @@ export default function Combat({handleProgChange, encounter}) {
             wrapUpTurn();
         } else if (event.target.id === 'special') {
             initiativeCopy[0].isBlocking = false;
-            setIsSpecial(initiativeCopy[0].characterClass);
             const specialUser = initiativeCopy[0];
             switch (specialUser.characterClass) {
                 case 'Barbarian':
                     specialUser.attack = specialUser.attack + specialUser.special;
                     specialUser.specialUsed = true;
+                    specialUser.specialUsedThisTurn = true;
                     console.log(`${specialUser.name} increased their Attack!`);
                     await letThatSinkIn();
                     wrapUpTurn();
@@ -107,6 +104,7 @@ export default function Combat({handleProgChange, encounter}) {
                 case 'Rogue':
                     specialUser.dodge = specialUser.dodge + specialUser.special;
                     specialUser.specialUsed = true;
+                    specialUser.specialUsedThisTurn = true;
                     console.log(`${specialUser.name} increased their Dodge!`);
                     await letThatSinkIn();
                     wrapUpTurn();
@@ -114,11 +112,13 @@ export default function Combat({handleProgChange, encounter}) {
                 case 'Ranger':
                     specialUser.attack = specialUser.attack + specialUser.special;
                     specialUser.specialUsed = true;
+                    specialUser.specialUsedThisTurn = true;
                     setButtonsClickable(true);
                 break;
                 case 'Wizard':
                     specialUser.attack = specialUser.special;
                     specialUser.specialUsed = true;
+                    specialUser.specialUsedThisTurn = true;
                     handleAttack(5);
                     await letThatSinkIn();
                     handleAttack(6);
@@ -131,10 +131,12 @@ export default function Combat({handleProgChange, encounter}) {
                     break;
                 case 'Cleric':
                     specialUser.specialUsed = true;
+                    specialUser.specialUsedThisTurn = true;
                     setButtonsClickable(true);
                     break;
                 case 'Druid':
                     specialUser.specialUsed = true;
+                    specialUser.specialUsedThisTurn = true;
                     handleHeal(1);
                     await letThatSinkIn();
                     handleHeal(2);
@@ -147,10 +149,12 @@ export default function Combat({handleProgChange, encounter}) {
                     break;
                 case 'Paladin':
                     specialUser.specialUsed = true;
+                    specialUser.specialUsedThisTurn = true;
                     handleTeamBuff();
                     break;
                 case 'Fighter':
                     specialUser.specialUsed = true;
+                    specialUser.specialUsedThisTurn = true;
                     handleTeamBuff();
                     break;
                 default:
@@ -165,14 +169,14 @@ export default function Combat({handleProgChange, encounter}) {
     const handleTargeting = async (event) => {
         const newTarget = event.target.id.slice(-1);
         const newTargetInt = parseInt(newTarget);
-        if (isSpecial === '') {
+        if (!initiativeCopy[0].specialUsedThisTurn) {
             handleAttack(newTargetInt);
             setButtonsClickable(false);
             await letThatSinkIn();
             wrapUpTurn();
         }
-        else if (isSpecial !== '') {
-            switch (isSpecial) {
+        else if (initiativeCopy[0].specialUsedThisTurn) {
+            switch (initiativeCopy[0].characterClass) {
                 case 'Ranger':
                     handleAttack(newTargetInt);
                     setButtonsClickable(false);
@@ -259,19 +263,20 @@ export default function Combat({handleProgChange, encounter}) {
             wrapUpTurn()
         }
     }
-
+    
     async function wrapUpTurn() {
-        if (isSpecial !== "") {
-            if (isSpecial === 'Ranger') {
+        if (initiativeCopy[0].specialUsedThisTurn) {
+            if (initiativeCopy[0].characterClass === 'Ranger') {
                 initiativeCopy[0].attack = initiativeCopy[0].special;
-                setIsSpecial("");
-            } else if (isSpecial === 'Wizard') {
+                initiativeCopy[0].specialUsedThisTurn = false;
+            } else if (initiativeCopy[0].characterClass === 'Wizard') {
                 initiativeCopy[0].attack = initiativeCopy[0].special * 4;
-                setIsSpecial("");
+                initiativeCopy[0].specialUsedThisTurn = false;
             } else {
-                setIsSpecial("");
+                initiativeCopy[0].specialUsedThisTurn = false;
             }
         }
+        
 
         const playersDown = initiativeCopy.filter((obj) => obj.isPlayer && obj.isDown);
         const enemiesDown = initiativeCopy.filter((obj) => !obj.isPlayer && obj.isDown);
@@ -285,11 +290,39 @@ export default function Combat({handleProgChange, encounter}) {
         if (enemiesDown.length === 4) {
             // Render next Combat
             console.log('Game Over! You Won');
+
+            const updatePromises = []
+
+            for (const object of initiativeCopy) {
+                if (object.isPlayer) {
+                    let { _id, currentHp, maxHp } = object;
+                    currentHp = currentHp + 10;
+                    if (currentHp > maxHp) {
+                        currentHp = maxHp;
+                    }
+
+                    updatePromises.push(
+                        updatePartyMemberHp({
+                            variables: { id: _id, currentHp: currentHp }
+                        })
+                    );
+                } else {
+                    continue;
+                }
+            }
+
+            await Promise.all(updatePromises);
+
             const currentUserProgression = userData.user.progression;
             const newUserProgression = currentUserProgression + 1;
             await updateUserProgression({
                 variables: { progression: newUserProgression }
             });
+
+            await letThatSinkIn();
+
+            
+
             handleProgChange(newUserProgression);
             return;
         }

@@ -103,6 +103,14 @@ export const UPDATE_USER_PROGRESSION = gql`
     }
   }
 `
+export const UPDATE_PARTY_MEMBER_HP = gql`
+  mutation UpdatePartyMemberHp($id: ID!, $currentHp: Int!) {
+    updatePartyMemberHp(_id: $id, currentHp: $currentHp) {
+      _id
+      currentHp
+    }
+  }
+`
 
 export const LOGIN_USER = gql`
   mutation login($username: String, $password: String) {
