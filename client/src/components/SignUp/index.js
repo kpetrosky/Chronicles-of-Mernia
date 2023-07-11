@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import { useMutation } from "@apollo/client";
-import { ADD_USER, LOGIN_USER } from "../../utils/mutations";
-import Auth from "../../utils/auth";
-import "../../styles/signUp.css";
+
+import React, { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { ADD_USER, LOGIN_USER, UPDATE_USER_PROGRESSION } from '../../utils/mutations';
+import Auth from '../../utils/auth';
+import "../../styles/signUp.css"
+
 // import image from "../../images/testForest.jpg";
 
 export default function SignUp({ handleProgChange }) {

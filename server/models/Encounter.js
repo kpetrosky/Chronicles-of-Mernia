@@ -40,7 +40,7 @@ const { Schema, model } = require('mongoose');
 
 const encounterSchema = new Schema({
   enemies: [{
-    type: Schema.Types.ObjectId,
+    type: Schema.Types.String,
     ref: "Enemy"
   }],
   biome: {

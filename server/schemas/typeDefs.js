@@ -41,7 +41,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    user(userId: ID!): User
+    user: User
     weapons: [Weapon]
   }
 
@@ -62,6 +62,7 @@ const typeDefs = gql`
       position: Int!): PartyMember
     addParty(members: [ID!]): Party
     updateUserParty(party: ID!): User
+    updateUserProgression(progression: Int): User
   }
 `;
 

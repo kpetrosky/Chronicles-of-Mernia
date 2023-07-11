@@ -1,47 +1,55 @@
 [
     {
+        "_id": "1",
         "name": "Giant Wasp",
         "hp": 8,
         "attack": 10,
         "speed": [3,5]
     },
     {
+        "_id": "2",
         "name": "Kobold",
         "hp": 10,
         "attack": 15,
         "speed": [6,8]
     },
     {
+        "_id": "3",
         "name": "Vulture",
         "hp": 12,
         "attack": 20,
         "speed": [1,3]
     },
     {
+        "_id": "4",
         "name": "Orc",
         "hp": 15,
         "attack": 25,
         "speed": [4,6]
     },
     {
+        "_id": "5",
         "name": "Tiger",
         "hp": 17,
         "attack": 30,
         "speed": [4,6]
     },
     {
+        "_id": "6",
         "name": "Goblin",
         "hp": 16,
         "attack": 25,
         "speed": [4,6]
     },
     {
+        "_id": "7",
         "name": "Bear",
         "hp": 19,
         "attack": 35,
         "speed": [6,8]
     },
     {
+        "_id": "8",
         "name": "Eldritch ooze",
         "hp": 20,
         "attack": 35,

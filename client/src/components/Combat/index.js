@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useQuery, useMutation } from '@apollo/client';
 import { 
     diceRoller, 
     letThatSinkIn,
 } from '../../utils/combat';
+import { QUERY_USER } from '../../utils/queries';
+import { UPDATE_USER_PROGRESSION } from '../../utils/mutations';
 
 export default function Combat({handleProgChange}) {
     const [initiativeState, setInitiativeState] = useState([]);
@@ -10,6 +13,8 @@ export default function Combat({handleProgChange}) {
     const [buttonsClickable, setButtonsClickable] = useState(false);
     const [isSpecial, setIsSpecial] = useState('');
     
+    const { data: userData } = useQuery(QUERY_USER);
+    const [updateUserProgression] = useMutation(UPDATE_USER_PROGRESSION);
 
     
     
@@ -375,7 +380,7 @@ export default function Combat({handleProgChange}) {
         }
     }
 
-    function wrapUpTurn() {
+    async function wrapUpTurn() {
         if (isSpecial !== "") {
             if (isSpecial === 'Ranger') {
                 initiativeCopy[0].attack = initiativeCopy[0].special;
@@ -400,7 +405,12 @@ export default function Combat({handleProgChange}) {
         if (enemiesDown.length === 4) {
             // Render next Combat
             console.log('Game Over! You Won');
-            return;
+            const currentUserProgression = userData.user.progression;
+            const newUserProgression = currentUserProgression + 1;
+            await updateUserProgression({
+                variables: { progression: newUserProgression }
+            });
+            handleProgChange(newUserProgression);
         }
 
         setInitiativeState(initiativeCopy);
