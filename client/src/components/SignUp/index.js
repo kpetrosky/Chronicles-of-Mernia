@@ -37,7 +37,6 @@ export default function SignUp({handleProgChange}) {
                 handleProgChange(userProgression)
                 } catch (loginError) {
                 console.error(loginError);
-                
                 }
                 
         }
@@ -67,8 +66,6 @@ export default function SignUp({handleProgChange}) {
             <form className="form-div">
                 <h2 className="signup-h2">Join the Battle!</h2>
                 <div className='signup-boxes'>
-                    <div className='login-box'>
-                    <button type="submit" id="login-btn" onClick={handleFormSubmit}>Login</button>
                     <input 
                         className="username-input" 
                         placeholder="Username"
@@ -79,34 +76,18 @@ export default function SignUp({handleProgChange}) {
                         />
                     <input 
                         className="password-input" 
-                        placeholder="******"
+                        placeholder="Password"
                         name="password"
                         type="password" 
                         value={formState.password}
                         onChange={handleChange}
                         />
-                        
+                        <div className='login-box'>
+                        <button type="submit" id="login-btn" onClick={handleFormSubmit}>Login</button>
                     </div>
                     <div className='signUp-box'>
                         <button type="submit" id="signUp-btn" onClick={handleFormSubmit}>Sign Up</button>
-                        <input 
-                        className="username-input" 
-                        placeholder="Username"
-                        name="username"
-                        type="text"
-                        value={formState.username}
-                        onChange={handleChange}
-                        />
-                        <input 
-                        className="password-input" 
-                        placeholder="******"
-                        name="password"
-                        type="password" 
-                        value={formState.password}
-                        onChange={handleChange}
-                        />
                     </div>
-                    
                     
                 </div>
             </form>
