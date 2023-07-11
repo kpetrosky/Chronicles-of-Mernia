@@ -5,150 +5,29 @@ import {
     letThatSinkIn,
 } from '../../utils/combat';
 import { QUERY_USER } from '../../utils/queries';
-import { UPDATE_USER_PROGRESSION } from '../../utils/mutations';
+import { UPDATE_USER_PROGRESSION, UPDATE_PARTY_MEMBER_HP } from '../../utils/mutations';
 
 export default function Combat({handleProgChange, encounter}) {
     const [initiativeState, setInitiativeState] = useState([]);
     const [positions, setPositions] = useState([]);
     const [buttonsClickable, setButtonsClickable] = useState(false);
-    const [isSpecial, setIsSpecial] = useState('');
     
     const { data: userData } = useQuery(QUERY_USER);
-    const [updateUserProgression] = useMutation(UPDATE_USER_PROGRESSION);
-
     
+    const [updateUserProgression] = useMutation(UPDATE_USER_PROGRESSION);
+    const [updatePartyMemberHp] = useMutation(UPDATE_PARTY_MEMBER_HP);
     
     useEffect(() => {
-        const exampleParty = {
-            user: {
-                _id: 1,
-                party: {
-                    _id: 2,
-                    members: [
-                        {
-                            _id: 11,
-                            name: 'Zach',
-                            characterClass: 'Fighter',
-                            special: 10,
-                            maxHp: 30,
-                            currentHp: 30,
-                            attack: 15,
-                            defense: 30,
-                            speed: [1,3],
-                            dodge: 5,
-                            weapon: {
-                                _id: 111,
-                                name: 'Warhammer',
-                                damage: [1,8],
-                            },
-                            position: 1
-                        },
-                        {
-                            _id: 12,
-                            name: 'Krystal',
-                            characterClass: 'Cleric',
-                            special: 10,
-                            maxHp: 15,
-                            currentHp: 15,
-                            attack: 15,
-                            defense: 20,
-                            speed: [2,4],
-                            dodge: 10,
-                            weapon: {
-                                _id: 112,
-                                name: 'Staff',
-                                damage: [1,4],
-                            },
-                            position: 2
-                        },
-                        {
-                            _id: 13,
-                            name: 'Geoff',
-                            characterClass: 'Ranger',
-                            special: 1,
-                            maxHp: 15,
-                            currentHp: 15,
-                            attack: 25,
-                            defense: 15,
-                            speed: [6,8],
-                            dodge: 20,
-                            weapon: {
-                                _id: 113,
-                                name: 'Dagger',
-                                damage: [1,4],
-                            },
-                            position: 3
-                        },
-                        {
-                            _id: 14,
-                            name: 'Markell',
-                            characterClass: 'Barbarian',
-                            special: 5,
-                            maxHp: 10,
-                            currentHp: 10,
-                            attack: 20,
-                            defense: 20,
-                            speed: [5,7],
-                            dodge: 10,
-                            weapon: {
-                                _id: 114,
-                                name: 'Spellbook',
-                                damage: [1,8],
-                            },
-                            position: 4
-                        },
-                    ]
-                }
-            }
-        }
-
-        // const exampleEncounter = {
-        //     encounter: {
-        //         _id: 9,
-        //         enemies: [
-        //             {
-        //                 _id: 99,
-        //                 name: "Giant Wasp",
-        //                 attack: 10,
-        //                 hp: 8,
-        //                 speed: [3,5]
-        //             },
-        //             {
-        //                 _id: 99,
-        //                 name: "Giant Wasp",
-        //                 attack: 10,
-        //                 hp: 8,
-        //                 speed: [3,5]
-        //             },
-        //             {
-        //                 _id: 98,
-        //                 name: "Kobold",
-        //                 attack: 15,
-        //                 hp: 10,
-        //                 speed: [6,8]
-        //             },
-        //             {
-        //                 _id: 97,
-        //                 name: "Vulture",
-        //                 attack: 20,
-        //                 hp: 12,
-        //                 speed: [1,3]
-        //             }
-        //         ],
-        //         biome: 'Forest',
-        //         progression: 2
-        //     }
-        // }
-
         function battleReadyParty(party) {
-            const partyMembers = party.user.party.members;
+            const partyMembers = party?.user.party.members || [];
             return partyMembers.map((object) => {
                 return {
                     ...object,
                     isBlocking: false,
                     isDown: false,
                     isPlayer: true,
-                    specialUsed: false
+                    specialUsed: false,
+                    specialUsedThisTurn: false
                 }
             });
         };
@@ -168,8 +47,6 @@ export default function Combat({handleProgChange, encounter}) {
             });
         };
 
-        const battleArray = battleReadyParty(exampleParty).concat(battleReadyEncounter(encounter));
-
         function updateSpeed(battleArray) {
             return battleArray.map((object) => {
                 const { speed, ...rest } = object;
@@ -180,13 +57,13 @@ export default function Combat({handleProgChange, encounter}) {
                 }
             });
         };
-
+        const battleArray = battleReadyParty(userData).concat(battleReadyEncounter(encounter));
         const initiativeOrder = updateSpeed(battleArray).sort((a, b) => b.speed - a.speed);
         const positionOrder = battleArray.sort((a, b) => a.position - b.position);
         
         setInitiativeState(initiativeOrder);
         setPositions(positionOrder);
-    }, []);
+    }, [userData, encounter]);
 
     function checkIfDown(targetObject) {
         if (targetObject.currentHp <= 0) {
@@ -214,12 +91,12 @@ export default function Combat({handleProgChange, encounter}) {
             wrapUpTurn();
         } else if (event.target.id === 'special') {
             initiativeCopy[0].isBlocking = false;
-            setIsSpecial(initiativeCopy[0].characterClass);
             const specialUser = initiativeCopy[0];
             switch (specialUser.characterClass) {
                 case 'Barbarian':
                     specialUser.attack = specialUser.attack + specialUser.special;
                     specialUser.specialUsed = true;
+                    specialUser.specialUsedThisTurn = true;
                     console.log(`${specialUser.name} increased their Attack!`);
                     await letThatSinkIn();
                     wrapUpTurn();
@@ -227,6 +104,7 @@ export default function Combat({handleProgChange, encounter}) {
                 case 'Rogue':
                     specialUser.dodge = specialUser.dodge + specialUser.special;
                     specialUser.specialUsed = true;
+                    specialUser.specialUsedThisTurn = true;
                     console.log(`${specialUser.name} increased their Dodge!`);
                     await letThatSinkIn();
                     wrapUpTurn();
@@ -234,11 +112,13 @@ export default function Combat({handleProgChange, encounter}) {
                 case 'Ranger':
                     specialUser.attack = specialUser.attack + specialUser.special;
                     specialUser.specialUsed = true;
+                    specialUser.specialUsedThisTurn = true;
                     setButtonsClickable(true);
                 break;
                 case 'Wizard':
                     specialUser.attack = specialUser.special;
                     specialUser.specialUsed = true;
+                    specialUser.specialUsedThisTurn = true;
                     handleAttack(5);
                     await letThatSinkIn();
                     handleAttack(6);
@@ -251,10 +131,12 @@ export default function Combat({handleProgChange, encounter}) {
                     break;
                 case 'Cleric':
                     specialUser.specialUsed = true;
+                    specialUser.specialUsedThisTurn = true;
                     setButtonsClickable(true);
                     break;
                 case 'Druid':
                     specialUser.specialUsed = true;
+                    specialUser.specialUsedThisTurn = true;
                     handleHeal(1);
                     await letThatSinkIn();
                     handleHeal(2);
@@ -267,10 +149,12 @@ export default function Combat({handleProgChange, encounter}) {
                     break;
                 case 'Paladin':
                     specialUser.specialUsed = true;
+                    specialUser.specialUsedThisTurn = true;
                     handleTeamBuff();
                     break;
                 case 'Fighter':
                     specialUser.specialUsed = true;
+                    specialUser.specialUsedThisTurn = true;
                     handleTeamBuff();
                     break;
                 default:
@@ -285,14 +169,14 @@ export default function Combat({handleProgChange, encounter}) {
     const handleTargeting = async (event) => {
         const newTarget = event.target.id.slice(-1);
         const newTargetInt = parseInt(newTarget);
-        if (isSpecial === '') {
+        if (!initiativeCopy[0].specialUsedThisTurn) {
             handleAttack(newTargetInt);
             setButtonsClickable(false);
             await letThatSinkIn();
             wrapUpTurn();
         }
-        else if (isSpecial !== '') {
-            switch (isSpecial) {
+        else if (initiativeCopy[0].specialUsedThisTurn) {
+            switch (initiativeCopy[0].characterClass) {
                 case 'Ranger':
                     handleAttack(newTargetInt);
                     setButtonsClickable(false);
@@ -379,19 +263,20 @@ export default function Combat({handleProgChange, encounter}) {
             wrapUpTurn()
         }
     }
-
+    
     async function wrapUpTurn() {
-        if (isSpecial !== "") {
-            if (isSpecial === 'Ranger') {
+        if (initiativeCopy[0].specialUsedThisTurn) {
+            if (initiativeCopy[0].characterClass === 'Ranger') {
                 initiativeCopy[0].attack = initiativeCopy[0].special;
-                setIsSpecial("");
-            } else if (isSpecial === 'Wizard') {
+                initiativeCopy[0].specialUsedThisTurn = false;
+            } else if (initiativeCopy[0].characterClass === 'Wizard') {
                 initiativeCopy[0].attack = initiativeCopy[0].special * 4;
-                setIsSpecial("");
+                initiativeCopy[0].specialUsedThisTurn = false;
             } else {
-                setIsSpecial("");
+                initiativeCopy[0].specialUsedThisTurn = false;
             }
         }
+        
 
         const playersDown = initiativeCopy.filter((obj) => obj.isPlayer && obj.isDown);
         const enemiesDown = initiativeCopy.filter((obj) => !obj.isPlayer && obj.isDown);
@@ -405,12 +290,41 @@ export default function Combat({handleProgChange, encounter}) {
         if (enemiesDown.length === 4) {
             // Render next Combat
             console.log('Game Over! You Won');
+
+            const updatePromises = []
+
+            for (const object of initiativeCopy) {
+                if (object.isPlayer) {
+                    let { _id, currentHp, maxHp } = object;
+                    currentHp = currentHp + 10;
+                    if (currentHp > maxHp) {
+                        currentHp = maxHp;
+                    }
+
+                    updatePromises.push(
+                        updatePartyMemberHp({
+                            variables: { id: _id, currentHp: currentHp }
+                        })
+                    );
+                } else {
+                    continue;
+                }
+            }
+
+            await Promise.all(updatePromises);
+
             const currentUserProgression = userData.user.progression;
             const newUserProgression = currentUserProgression + 1;
             await updateUserProgression({
                 variables: { progression: newUserProgression }
             });
+
+            await letThatSinkIn();
+
+            
+
             handleProgChange(newUserProgression);
+            return;
         }
 
         setInitiativeState(initiativeCopy);

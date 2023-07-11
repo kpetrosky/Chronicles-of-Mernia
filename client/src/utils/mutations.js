@@ -63,7 +63,25 @@ export const ADD_PARTY = gql`
   mutation addParty($members: [ID!]) {
     addParty(members: $members) {
       _id
-      members
+      members {
+        _id
+        name
+        characterClass
+        special
+        maxHp
+        currentHp
+        attack
+        defense
+        speed
+        dodge
+        weapon {
+          _id
+          name
+          damage
+          characterClass
+        }
+        position
+      }
     }
   }
 `
@@ -82,6 +100,14 @@ export const UPDATE_USER_PROGRESSION = gql`
     updateUserProgression(progression: $progression) {
       _id
       progression
+    }
+  }
+`
+export const UPDATE_PARTY_MEMBER_HP = gql`
+  mutation UpdatePartyMemberHp($id: ID!, $currentHp: Int!) {
+    updatePartyMemberHp(_id: $id, currentHp: $currentHp) {
+      _id
+      currentHp
     }
   }
 `
