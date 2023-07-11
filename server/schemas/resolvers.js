@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Weapon, PartyMember, Party } = require('../models');
+const { User, Weapon, PartyMember, Party, Encounter } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -11,9 +11,11 @@ const resolvers = {
     },
     weapons: async (parent, args) => {
       return Weapon.find({});
-    }
+    },
+    encounters: async (parent, args) => {
+        return Encounter.find({}).populate('enemies');
+    },
   },
-
   Mutation: {
     addUser: async (parent, { username, password, progression }) => {
       const user = await User.create({ username, password, progression });
