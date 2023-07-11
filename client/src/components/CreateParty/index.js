@@ -223,11 +223,12 @@ function ClassForm({handleProgChange}) {
             </div>
           </div>
         </section>
-      </form>
-      <div className="buttons">
+        <div className="buttons">
         <button id="submit-btn" type="submit">Submit</button>
         <button id="create-btn" type="submit">Create Party</button>
       </div>
+      </form>
+   
   </div>
 );
 }
