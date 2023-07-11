@@ -9,16 +9,3 @@ export function letThatSinkIn() {
         }, 3000);
     });
 }
-
-export function checkIfDown(targetObject) {
-    if (targetObject.currentHp <= 0) {
-        targetObject.currentHp = 0;
-        targetObject.isDown = true;
-    }
-}
-
-export function checkIfRevived(targetObject) {
-    if (targetObject.isDown && targetObject.currentHp > 0) {
-        targetObject.isDown = false;
-    }
-}

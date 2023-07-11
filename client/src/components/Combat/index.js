@@ -8,10 +8,10 @@ export default function Combat({handleProgChange}) {
     const [initiativeState, setInitiativeState] = useState([]);
     const [positions, setPositions] = useState([]);
     const [buttonsClickable, setButtonsClickable] = useState(false);
-    const [targets, setTargets] = useState([]);
-    const [numberOfTargets, setNumberOfTargets] = useState(9);
+    const [isSpecial, setIsSpecial] = useState('');
+    
 
-    let isSpecial = '';
+    
     
     useEffect(() => {
         const exampleParty = {
@@ -22,8 +22,8 @@ export default function Combat({handleProgChange}) {
                     members: [
                         {
                             _id: 11,
-                            name: 'zach',
-                            characterClass: 'Paladin',
+                            name: 'Zach',
+                            characterClass: 'Fighter',
                             special: 10,
                             maxHp: 30,
                             currentHp: 30,
@@ -40,8 +40,8 @@ export default function Combat({handleProgChange}) {
                         },
                         {
                             _id: 12,
-                            name: 'krystal',
-                            characterClass: 'Druid',
+                            name: 'Krystal',
+                            characterClass: 'Cleric',
                             special: 10,
                             maxHp: 15,
                             currentHp: 15,
@@ -58,8 +58,8 @@ export default function Combat({handleProgChange}) {
                         },
                         {
                             _id: 13,
-                            name: 'geoff',
-                            characterClass: 'Rogue',
+                            name: 'Geoff',
+                            characterClass: 'Ranger',
                             special: 1,
                             maxHp: 15,
                             currentHp: 15,
@@ -76,8 +76,8 @@ export default function Combat({handleProgChange}) {
                         },
                         {
                             _id: 14,
-                            name: 'markell',
-                            characterClass: 'Wizard',
+                            name: 'Markell',
+                            characterClass: 'Barbarian',
                             special: 5,
                             maxHp: 10,
                             currentHp: 10,
@@ -152,8 +152,10 @@ export default function Combat({handleProgChange}) {
             const enemies = encounter.encounter.enemies;
             return enemies.map((object) => {
                 const position = enemies.indexOf(object) + 5;
+                const { hp } = object;
                 return {
                     ...object,
+                    currentHp: hp,
                     isDown: false,
                     isPlayer: false,
                     position: position
@@ -180,69 +182,83 @@ export default function Combat({handleProgChange}) {
         setInitiativeState(initiativeOrder);
         setPositions(positionOrder);
     }, []);
-    
+
     function checkIfDown(targetObject) {
         if (targetObject.currentHp <= 0) {
             targetObject.currentHp = 0;
             targetObject.isDown = true;
+            console.log(`${targetObject.name} is down!`);
         }
     }
     
     function checkIfRevived(targetObject) {
         if (targetObject.isDown && targetObject.currentHp > 0) {
             targetObject.isDown = false;
+            console.log(`${targetObject.name} has been revived!`);
         }
     }
 
-    console.log(initiativeState);
-    console.log(targets);
-    console.log(numberOfTargets);
-
     const initiativeCopy = [...initiativeState];
 
-    const handleAction = (event) => {
+    const handleAction = async (event) => {
         if (event.target.id === 'attack') {
             initiativeCopy[0].isBlocking = false;
             setButtonsClickable(true);
-            setNumberOfTargets(1);
         } else if (event.target.id === 'block') {
             initiativeCopy[0].isBlocking = true;
             wrapUpTurn();
         } else if (event.target.id === 'special') {
             initiativeCopy[0].isBlocking = false;
-            isSpecial = initiativeCopy[0].characterClass;
+            setIsSpecial(initiativeCopy[0].characterClass);
             const specialUser = initiativeCopy[0];
             switch (specialUser.characterClass) {
                 case 'Barbarian':
                     specialUser.attack = specialUser.attack + specialUser.special;
                     specialUser.specialUsed = true;
+                    console.log(`${specialUser.name} increased their Attack!`);
+                    await letThatSinkIn();
                     wrapUpTurn();
                     break;
                 case 'Rogue':
                     specialUser.dodge = specialUser.dodge + specialUser.special;
                     specialUser.specialUsed = true;
+                    console.log(`${specialUser.name} increased their Dodge!`);
+                    await letThatSinkIn();
                     wrapUpTurn();
                     break;
                 case 'Ranger':
                     specialUser.attack = specialUser.attack + specialUser.special;
                     specialUser.specialUsed = true;
                     setButtonsClickable(true);
-                    setNumberOfTargets(1)
                 break;
                 case 'Wizard':
                     specialUser.attack = specialUser.special;
                     specialUser.specialUsed = true;
-                    handleAttack([5, 6, 7, 8]);
+                    handleAttack(5);
+                    await letThatSinkIn();
+                    handleAttack(6);
+                    await letThatSinkIn();
+                    handleAttack(7);
+                    await letThatSinkIn();
+                    handleAttack(8);
+                    await letThatSinkIn();
+                    wrapUpTurn();
                     break;
                 case 'Cleric':
                     specialUser.specialUsed = true;
                     setButtonsClickable(true);
-                    setNumberOfTargets(1)
                     break;
                 case 'Druid':
                     specialUser.specialUsed = true;
-                    setButtonsClickable(true);
-                    setNumberOfTargets(2)
+                    handleHeal(1);
+                    await letThatSinkIn();
+                    handleHeal(2);
+                    await letThatSinkIn();
+                    handleHeal(3);
+                    await letThatSinkIn();
+                    handleHeal(4);
+                    await letThatSinkIn();
+                    wrapUpTurn();
                     break;
                 case 'Paladin':
                     specialUser.specialUsed = true;
@@ -261,26 +277,28 @@ export default function Combat({handleProgChange}) {
         }
     }
 
-    const handleTargeting = (event) => {
+    const handleTargeting = async (event) => {
         const newTarget = event.target.id.slice(-1);
-        setTargets((prevTargets) => [...prevTargets, newTarget]);
-        if (targets.length === numberOfTargets && isSpecial === '') {
-            handleAttack(targets);
+        const newTargetInt = parseInt(newTarget);
+        if (isSpecial === '') {
+            handleAttack(newTargetInt);
             setButtonsClickable(false);
+            await letThatSinkIn();
+            wrapUpTurn();
         }
-        if (targets.length === numberOfTargets && isSpecial !== '') {
+        else if (isSpecial !== '') {
             switch (isSpecial) {
                 case 'Ranger':
-                    handleAttack(targets);
+                    handleAttack(newTargetInt);
                     setButtonsClickable(false);
+                    await letThatSinkIn();
+                    wrapUpTurn();
                     break;
                 case 'Cleric':
-                    handleHeal(targets);
+                    handleHeal(newTargetInt);
                     setButtonsClickable(false);
-                    break;
-                case 'Druid':
-                    handleHeal(targets);
-                    setButtonsClickable(false);
+                    await letThatSinkIn();
+                    wrapUpTurn();
                     break;
                 default:
                     console.log('Error! Current class special does not use targeting');
@@ -289,47 +307,41 @@ export default function Combat({handleProgChange}) {
         }
     }
 
-    const handleAttack = async (targetPosition) => {
+    const handleAttack = (targetPosition) => {
         const attacker = initiativeCopy[0];
             const targetObject = initiativeCopy.find((obj) => obj.position === targetPosition);
-            if (targetObject.dodge) {
+            if (targetObject.isPlayer) {
                 const numberToBeat = diceRoller([1,100]);
                 if (targetObject.dodge >= numberToBeat) {
                     console.log(`${targetObject.name} dodged the attack from ${attacker.name}!`);
-                    await letThatSinkIn();
-                    wrapUpTurn();
+                    return;
+                } else if (targetObject.isBlocking) {
+                    let damage = attacker.attack - targetObject.defense;
+                    if (damage < 0) {
+                        damage = 0;
+                    }
+                    targetObject.currentHp = targetObject.currentHp - damage;
+                    console.log(`${targetObject.name} blocked the attack from ${attacker.name} and took ${damage} damage!`);
+                    checkIfDown(targetObject);
+                    return;
+                } else {
+                    let damage = attacker.attack;
+                    targetObject.currentHp = targetObject.currentHp - damage;
+                    console.log(`${attacker.name} hit ${targetObject.name}(${targetObject.position}) for ${damage}!`);
+                    checkIfDown(targetObject);
+                    return;
                 }
-            }
-            if (targetObject.isBlocking) {
-                let damage = attacker.attack - targetObject.defense;
-                if (damage < 0) {
-                    damage = 0;
-                }
-                targetObject.currentHp = targetObject.currentHp - damage;
-                console.log(`${targetObject.name} blocked the attack from ${attacker.name} and took ${damage} damage!`);
-                checkIfDown(targetObject);
-                await letThatSinkIn();
-                wrapUpTurn();
-            }
-            if (attacker.weapon) {
+            } else if (attacker.weapon) {
                 let damage = attacker.attack + diceRoller(attacker.weapon.damage);
                 targetObject.currentHp = targetObject.currentHp - damage;
                 console.log(`${attacker.name} hit ${targetObject.name}(${targetObject.position}) for ${damage} with their ${attacker.weapon.name}!`);
                 checkIfDown(targetObject);
-                await letThatSinkIn();
                 return;
             }
-            let damage = attacker.attack;
-            targetObject.currentHp = targetObject.currentHp - damage;
-            console.log(`${attacker.name} hit ${targetObject.name}(${targetObject.position}) for ${damage}!`);
-            checkIfDown(targetObject);
-            await letThatSinkIn();
-            wrapUpTurn();
     }
 
-    const handleHeal = async (targetPositions) => {
+    const handleHeal = (targetPosition) => {
         const healer = initiativeCopy[0];
-        for (const targetPosition of targetPositions) {
             const targetObject = initiativeCopy.find((obj) => obj.position === targetPosition);
             targetObject.currentHp = targetObject.currentHp + healer.special;
             if (targetObject.currentHp > targetObject.maxHp) {
@@ -337,10 +349,7 @@ export default function Combat({handleProgChange}) {
             }
             console.log(`${healer.name} healed ${targetObject.name} for ${healer.special}HP!`);
             checkIfRevived(targetObject);
-            await letThatSinkIn();
-            continue;
-        }
-        wrapUpTurn();
+            return;
     }
 
     const handleTeamBuff = async () => {
@@ -353,6 +362,7 @@ export default function Combat({handleProgChange}) {
                 await letThatSinkIn();
                 continue;
             }
+            wrapUpTurn()
         }
         if (buffer.characterClass === "Fighter") {
             for (const teamMember of team) {
@@ -361,25 +371,25 @@ export default function Combat({handleProgChange}) {
                 await letThatSinkIn();
                 continue;
             }
+            wrapUpTurn()
         }
-        wrapUpTurn();
     }
 
     function wrapUpTurn() {
         if (isSpecial !== "") {
             if (isSpecial === 'Ranger') {
                 initiativeCopy[0].attack = initiativeCopy[0].special;
-                isSpecial = "";
+                setIsSpecial("");
             } else if (isSpecial === 'Wizard') {
                 initiativeCopy[0].attack = initiativeCopy[0].special * 4;
-                isSpecial = "";
+                setIsSpecial("");
             } else {
-                isSpecial = "";
+                setIsSpecial("");
             }
         }
 
         const playersDown = initiativeCopy.filter((obj) => obj.isPlayer && obj.isDown);
-        const enemiesDown = initiativeCopy.filter(obj => !obj.isPlayer && obj.isDown);
+        const enemiesDown = initiativeCopy.filter((obj) => !obj.isPlayer && obj.isDown);
 
         if (playersDown.length === 4) {
             // Render Game Over
@@ -393,28 +403,25 @@ export default function Combat({handleProgChange}) {
             return;
         }
 
-        
-        const shiftInitiative = [...initiativeCopy.slice(1), initiativeCopy[0]];
-        initiativeCopy = shiftInitiative;
-        // setInitiativeState(initiativeCopy);
-        // const shiftInitiative = [...initiativeState.slice(1), initiativeState[0]];
-        // setNumberOfTargets(9);
-        // setTargets([]);
-        // setInitiativeState(shiftInitiative);
+        setInitiativeState(initiativeCopy);
+        const shiftInitiative = [...initiativeState.slice(1), initiativeState[0]];
+        setInitiativeState(shiftInitiative);
     }
     
-    function startEnemyTurn(event) {
+    if (initiativeCopy.length === 8) {
         if (!initiativeCopy[0].isPlayer) {
             if (!initiativeCopy[0].isDown) {
-                let targetedPlayer;
-                do {
-                    const randomPosition = diceRoller([1,4]);
-                    targetedPlayer = initiativeCopy.find((obj) => obj.position === randomPosition && !obj.isDown);
-                } while (!targetedPlayer);
-                handleAttack(targetedPlayer.position);  
-            } else {
-                wrapUpTurn();
-            }
+                // let targetedPlayer;
+                // do {
+                //     const randomPosition = diceRoller([1,4]);
+                //     targetedPlayer = initiativeCopy.find((obj) => obj.position === randomPosition && !obj.isDown);
+                // } while (!targetedPlayer);
+                const targetedPlayer = diceRoller([1,4]);
+                handleAttack(targetedPlayer);
+            } 
+        }
+        if (initiativeCopy[0].isDown) {
+            wrapUpTurn();
         }
     }
 
@@ -509,14 +516,10 @@ export default function Combat({handleProgChange}) {
                     )}
                 </div>
                 <div id="turn-taker">
-
+                        <button onClick={wrapUpTurn}>End Enemy Turn</button>
                 </div>
                 <div id="target">
 
-                </div>
-                <div id="start-turn">
-                    <button
-                    onClick={startEnemyTurn}>Start Enemy Turn</button>
                 </div>
                 <div id='enemy-container'>
                     <button 
