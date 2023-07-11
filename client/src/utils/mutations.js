@@ -63,7 +63,25 @@ export const ADD_PARTY = gql`
   mutation addParty($members: [ID!]) {
     addParty(members: $members) {
       _id
-      members
+      members {
+        _id
+        name
+        characterClass
+        special
+        maxHp
+        currentHp
+        attack
+        defense
+        speed
+        dodge
+        weapon {
+          _id
+          name
+          damage
+          characterClass
+        }
+        position
+      }
     }
   }
 `

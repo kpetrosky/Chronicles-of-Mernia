@@ -11,6 +11,7 @@ const typeDefs = gql`
 
   type Weapon {
     _id: ID
+    name: String
     damage: [Int]
     characterClass: String
   }
@@ -32,7 +33,7 @@ const typeDefs = gql`
 
   type Party {
     _id: ID!
-    members: [ID!]
+    members: [PartyMember]
   }
 
   type Auth {
@@ -43,6 +44,7 @@ const typeDefs = gql`
   type Query {
     user: User
     weapons: [Weapon]
+    party(_id: ID): Party
   }
 
   type Mutation {

@@ -6,12 +6,27 @@ const resolvers = {
   Query: {
     user: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id });
+        return User.findOne({ _id: context.user._id })
+        .populate({
+          path: 'party',
+          model: 'Party',
+          populate: {
+            path: 'members',
+            model: 'PartyMember',
+            populate: {
+              path: 'weapon',
+              model: 'Weapon'
+            }
+          }
+        });
       }
     },
     weapons: async (parent, args) => {
       return Weapon.find({});
-    }
+    },
+    party: async (parent, { _id }) => {
+      return await Party.findOne({ _id });
+    },
   },
 
   Mutation: {
@@ -68,7 +83,12 @@ const resolvers = {
       return newPartyMember;
     },
     addParty: async (parent, { members }) => {
-      const newParty = await Party.create({ members })
+      const partyMemberArray = []
+      for (const member of members) {
+        const partyMemberData = await PartyMember.findOne({ _id: member }).populate('weapon');
+        partyMemberArray.push(partyMemberData);
+      }
+      const newParty = await Party.create({ members: partyMemberArray })
       return newParty;
     },
     updateUserParty: async (parent, { party }, context) => {
