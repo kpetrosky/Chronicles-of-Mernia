@@ -77,6 +77,14 @@ export const UPDATE_USER_PARTY = gql`
     }
   }
 `
+export const UPDATE_USER_PROGRESSION = gql`
+  mutation updateUserProgression($progression: Int) {
+    updateUserProgression(progression: $progression) {
+      _id
+      progression
+    }
+  }
+`
 
 export const LOGIN_USER = gql`
   mutation login($username: String, $password: String) {

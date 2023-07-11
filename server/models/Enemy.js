@@ -4,6 +4,9 @@
 const { Schema, model } = require('mongoose');
 
 const enemySchema = new Schema({
+    _id:{
+        type: String,
+    },
     name: {
         type: String,
     },
