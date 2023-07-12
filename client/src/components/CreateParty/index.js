@@ -36,7 +36,7 @@ function ClassForm({handleProgChange}) {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    const name1 = event.target.elements.name1.value;
+    const name1 = document.getElementById('name1').value;
     const characterClass1 = event.target.elements.class1.value;
     const name2 = event.target.elements.name2.value;
     const characterClass2 = event.target.elements.class2.value;
@@ -224,11 +224,11 @@ function ClassForm({handleProgChange}) {
             </div>
           </div>
         </section>
-      </form>
-      <div className="buttons">
+        <div className="buttons">
         {/* <button id="submit-btn" type="submit">Submit</button> */}
-        <button id="create-btn" type="submit" onClick={handleFormSubmit}>Create Party</button>
-      </div>
+          <button id="create-btn" type="submit">Create Party</button>
+        </div>
+      </form>
   </div>
 );
 }
