@@ -1,9 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Dancing+Script&family=Pacifico&family=Tilt+Prism&display=swap');
 
-HTML{
+/* HTML{
     height: 100vh;
-    
-}
+} */
 
 h1 {
     margin-bottom: 0px;
@@ -82,7 +81,7 @@ h1 {
 }
 
 .main-7 {
-    background-image: url(../images/testForest.jpg);
+    background-image: url(../images/DNDparty2.avif);
     background-size: cover;
     border-radius: 25px;
     border: 5px solid black;
@@ -137,6 +136,76 @@ h1 {
 }
 
 .container-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid black;
+    padding-bottom: 1.5%;
+    /* padding-top: 1%; */
+    margin-right: 7%;
+    margin-left: 7%;
+    background-color: rgba(255, 255, 255, 0.75);
+    border-radius: 25px;
+    position: relative;
+}
+
+.container-3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid black;
+    padding-bottom: 1.5%;
+    /* padding-top: 1%; */
+    margin-right: 7%;
+    margin-left: 7%;
+    background-color: rgba(255, 255, 255, 0.75);
+    border-radius: 25px;
+    position: relative;
+}
+
+.container-4 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid black;
+    padding-bottom: 1.5%;
+    /* padding-top: 1%; */
+    margin-right: 7%;
+    margin-left: 7%;
+    background-color: rgba(255, 255, 255, 0.75);
+    border-radius: 25px;
+    position: relative;
+}
+
+.container-5 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid black;
+    padding-bottom: 1.5%;
+    /* padding-top: 1%; */
+    margin-right: 7%;
+    margin-left: 7%;
+    background-color: rgba(255, 255, 255, 0.75);
+    border-radius: 25px;
+    position: relative;
+}
+
+.container-6 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid black;
+    padding-bottom: 1.5%;
+    /* padding-top: 1%; */
+    margin-right: 7%;
+    margin-left: 7%;
+    background-color: rgba(255, 255, 255, 0.75);
+    border-radius: 25px;
+    position: relative;
+}
+
+.container-7 {
     display: flex;
     justify-content: center;
     align-items: center;
