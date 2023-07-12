@@ -1,22 +1,25 @@
-import React from 'react';
-import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_WEAPONS } from '../../utils/queries';
-import { ADD_PARTY_MEMBER, ADD_PARTY, UPDATE_USER_PARTY, UPDATE_USER_PROGRESSION } from '../../utils/mutations';
-import { findBaseStats } from '../../utils/baseStats';
+import React from "react";
+import { useQuery, useMutation } from "@apollo/client";
+import { QUERY_WEAPONS } from "../../utils/queries";
+import {
+  ADD_PARTY_MEMBER,
+  ADD_PARTY,
+  UPDATE_USER_PARTY,
+  UPDATE_USER_PROGRESSION,
+} from "../../utils/mutations";
+import { findBaseStats } from "../../utils/baseStats";
 import "../../styles/party.css";
 
-
-function ClassForm({handleProgChange}) {
-
-// Four forms render, each with a dropdown for class and name
-// Error handling for lack of selection
-// Once all selections are made and submit button clicked
-// Create helper function to get weapon based on class
-// Get position data from form component
-// Create array of objects that compile all the data needed to put to model
-// Map over array and update pm model using graphql
-// Then get all the newly created pm models and put into array, tie to party document
-// create party instance and tie to user automatically
+function ClassForm({ handleProgChange }) {
+  // Four forms render, each with a dropdown for class and name
+  // Error handling for lack of selection
+  // Once all selections are made and submit button clicked
+  // Create helper function to get weapon based on class
+  // Get position data from form component
+  // Create array of objects that compile all the data needed to put to model
+  // Map over array and update pm model using graphql
+  // Then get all the newly created pm models and put into array, tie to party document
+  // create party instance and tie to user automatically
 
   const { data: weaponsData } = useQuery(QUERY_WEAPONS);
   const [addPartyMember] = useMutation(ADD_PARTY_MEMBER);
@@ -27,16 +30,16 @@ function ClassForm({handleProgChange}) {
   const weapons = weaponsData?.weapons || [];
 
   function findWeaponIdByClass(characterClass) {
-    const matchedWeapon = weapons.find((weapon) => weapon.characterClass === characterClass);
+    const matchedWeapon = weapons.find(
+      (weapon) => weapon.characterClass === characterClass
+    );
     return matchedWeapon ? matchedWeapon._id : null;
   }
-  
-
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    const name1 = document.getElementById('name1').value;
+    const name1 = document.getElementById("name1").value;
     const characterClass1 = event.target.elements.class1.value;
     const name2 = event.target.elements.name2.value;
     const characterClass2 = event.target.elements.class2.value;
@@ -44,36 +47,36 @@ function ClassForm({handleProgChange}) {
     const characterClass3 = event.target.elements.class3.value;
     const name4 = event.target.elements.name4.value;
     const characterClass4 = event.target.elements.class4.value;
-    
+
     const characterArray = [
       {
         name: name1.trim(),
         characterClass: characterClass1,
-        position: 1
+        position: 1,
       },
       {
         name: name2.trim(),
         characterClass: characterClass2,
-        position: 2
+        position: 2,
       },
       {
         name: name3.trim(),
         characterClass: characterClass3,
-        position: 3
+        position: 3,
       },
       {
         name: name4.trim(),
         characterClass: characterClass4,
-        position: 4
-      }
+        position: 4,
+      },
     ];
-    
+
     const isEmpty = (value) => {
-      return value === '';
+      return value === "";
     };
 
     const isUnselected = (value) => {
-      return value === "Select Character Class..."
+      return value === "Select Character Class...";
     };
 
     const containsEmpty = characterArray.some((character) => {
@@ -88,7 +91,7 @@ function ClassForm({handleProgChange}) {
       alert("Please fill all fields!");
       return;
     } else {
-      const compiledData = compilePartyData(characterArray)
+      const compiledData = compilePartyData(characterArray);
       console.log(compiledData);
       const newPartyIds = [];
       try {
@@ -108,10 +111,10 @@ function ClassForm({handleProgChange}) {
         await updateUserParty({
           variables: { party: newPartyId },
         });
-        console.log('Party Members Added!');
+        console.log("Party Members Added!");
 
         await updateUserProgression({
-          variables: { progression: 2 }
+          variables: { progression: 2 },
         });
         handleProgChange(2);
       } catch (error) {
@@ -121,8 +124,7 @@ function ClassForm({handleProgChange}) {
     }
 
     event.target.reset();
-  }
-
+  };
 
   function compilePartyData(characterArray) {
     return characterArray.map((object) => {
@@ -132,137 +134,144 @@ function ClassForm({handleProgChange}) {
       const { maxHp: hp } = baseStats;
       const updatedBaseStats = {
         ...baseStats,
-        currentHp: hp
+        currentHp: hp,
       };
       return {
         ...object,
         weapon: weaponId,
-        ...updatedBaseStats
-      }
-    })
+        ...updatedBaseStats,
+      };
+    });
   }
-  
 
-  const characterClasses = ["Barbarian", "Rogue", "Ranger", "Wizard", "Cleric", "Druid", "Paladin", "Fighter"]
+  const characterClasses = [
+    "Barbarian",
+    "Rogue",
+    "Ranger",
+    "Wizard",
+    "Cleric",
+    "Druid",
+    "Paladin",
+    "Fighter",
+  ];
 
   return (
-  <div className="party-main">
+    <div className="party-main">
       <h2 className="party-h2">Create Your Party!</h2>
-      <form className="classes-div" onSubmit={handleFormSubmit}>
-        <section className="members" id="member-1">
-          <h2 className="card-title">Party Member 1</h2>
-          <div className="member-box">
-            <div className="party-info">
-              <label htmlFor="name" id="label1">Name:</label>
-              <input type="text" className="name-text" id="name1" name="name" />
-              <select className="party-class" id="class1">
-              <option>Select Class...</option>
-                {characterClasses.map((CharacterClasses) => (
-                <option key={CharacterClasses} value={CharacterClasses}>
-                {CharacterClasses}
-              </option>
-              ))}
-              </select>
+      <form  onSubmit={handleFormSubmit}>
+        <div className="classes-div">
+          <section className="members" id="member-1">
+            <h2 className="card-title">Party Member 1</h2>
+            <div className="member-box">
+              <div className="party-info">
+                <label htmlFor="name" id="label1">
+                  Name:
+                </label>
+                <input
+                  type="text"
+                  className="name-text"
+                  id="name1"
+                  name="name"
+                />
+                <select className="party-class" id="class1">
+                  <option>Select Class...</option>
+                  {characterClasses.map((CharacterClasses) => (
+                    <option key={CharacterClasses} value={CharacterClasses}>
+                      {CharacterClasses}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="party-pic"></div>
             </div>
-            <div className="party-pic">
-            </div>   
-          </div>
-        </section>
-        <section className="members" id="member-2">
-          <h2 className="card-title">Party Member 2</h2>
-          <div className="member-box">
-            <div className="party-info">
-              <label htmlFor="name" id="label1">Name:</label>
-              <input type="text" className="name-text" id="name2" name="name" />
-              <select className="party-class" id="class2">
-              <option>Select Class...</option>
-                {characterClasses.map((CharacterClasses) => (
-                <option key={CharacterClasses} value={CharacterClasses}>
-                {CharacterClasses}
-              </option>
-              ))}
-              </select>
+          </section>
+          <section className="members" id="member-2">
+            <h2 className="card-title">Party Member 2</h2>
+            <div className="member-box">
+              <div className="party-info">
+                <label htmlFor="name" id="label1">
+                  Name:
+                </label>
+                <input
+                  type="text"
+                  className="name-text"
+                  id="name2"
+                  name="name"
+                />
+                <select className="party-class" id="class2">
+                  <option>Select Class...</option>
+                  {characterClasses.map((CharacterClasses) => (
+                    <option key={CharacterClasses} value={CharacterClasses}>
+                      {CharacterClasses}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="party-pic"></div>
             </div>
-            <div className="party-pic">
+          </section>
+          <section className="members" id="member-3">
+            <h2 className="card-title">Party Member 3</h2>
+            <div className="member-box">
+              <div className="party-info">
+                <label htmlFor="name" id="label1">
+                  Name:
+                </label>
+                <input
+                  type="text"
+                  className="name-text"
+                  id="name3"
+                  name="name"
+                />
+                <select className="party-class" id="class3">
+                  <option>Select Character Class...</option>
+                  {characterClasses.map((CharacterClasses) => (
+                    <option key={CharacterClasses} value={CharacterClasses}>
+                      {CharacterClasses}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="party-pic"></div>
             </div>
-          </div>
-        </section>
-        <section className="members" id="member-3">
-          <h2 className="card-title">Party Member 3</h2>
-          <div className="member-box">
-            <div className="party-info">
-              <label htmlFor="name">Name:</label>
-              <input type="text" className="name-text" id="name3" name="name" />
-              <select className="party-class" id="class3">
-              <option>Select Character Class...</option>
-                {characterClasses.map((CharacterClasses) => (
-                <option key={CharacterClasses} value={CharacterClasses}>
-                {CharacterClasses}
-              </option>
-              ))}
-              </select>
+          </section>
+          <section className="members" id="member-4">
+            <h2 className="card-title">Party Member 4</h2>
+            <div className="member-box">
+              <div className="party-info">
+                <label htmlFor="name" id="label1">
+                  Name:
+                </label>
+                <input
+                  type="text"
+                  className="name-text"
+                  id="name4"
+                  name="name"
+                />
+                <select className="party-class" id="class4">
+                  <option>Select Character Class...</option>
+                  {characterClasses.map((CharacterClasses) => (
+                    <option key={CharacterClasses} value={CharacterClasses}>
+                      {CharacterClasses}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="party-pic"></div>
             </div>
-            <div className="party-pic">
-            </div>
-          </div>
-        </section>
-        <section className="members" id="member-4">
-          <h2 className="card-title">Party Member 4</h2>
-          <div className="member-box">
-            <div className="party-info">
-              <label htmlFor="name">Name:</label>
-              <input type="text" className="name-text" id="name4" name="name" />
-              <select className="party-class" id="class4">
-              <option>Select Character Class...</option>
-                {characterClasses.map((CharacterClasses) => (
-                <option key={CharacterClasses} value={CharacterClasses}>
-                {CharacterClasses}
-              </option>
-              ))}
-              </select>
-            </div>
-            <div className="party-pic">
-            </div>
-          </div>
-        </section>
-        <div className="buttons">
-        {/* <button id="submit-btn" type="submit">Submit</button> */}
-          <button id="create-btn" type="submit">Create Party</button>
+          </section>
+        </div>
+        <div className="button-party">
+          {/* <button id="submit-btn" type="submit">Submit</button> */}
+          <button id="create-btn" type="submit">
+            Create Party
+          </button>
         </div>
       </form>
-  </div>
-);
+    </div>
+  );
 }
 export default ClassForm;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // function  ClassForm(){
 //     const [input, setInput] = useState('');
@@ -355,15 +364,17 @@ export default ClassForm;
 // };
 // export default ClassForm;
 
-
-{/* 
+{
+  /* 
 const handleSubmit = (e) => {
     e.preventDefault();
 
     setInput('');
     setClass('');
-  }; */}
-{/* //want to create an object for each character with  attributes for each object  
+  }; */
+}
+{
+  /* //want to create an object for each character with  attributes for each object  
 
 
 //establish a return function that displays the JSX of the characters 
@@ -371,4 +382,5 @@ const handleSubmit = (e) => {
 //4 seperateforms containing name and a drop down for class, 
 // create an array of objects with each character and map over Array to make 4 seperate models
 // take the models and grab the ID and connect to party that was created 
-// every time an action is taken it creates a global state varriable that creates progression */}
+// every time an action is taken it creates a global state varriable that creates progression */
+}
