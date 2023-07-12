@@ -7,7 +7,7 @@ import {
 import { QUERY_USER } from '../../utils/queries';
 import { UPDATE_USER_PROGRESSION, UPDATE_PARTY_MEMBER_HP } from '../../utils/mutations';
 
-export default function Combat({handleProgChange, encounter}) {
+export default function Combat({handleProgChange, encounter, handleLoss}) {
     const [initiativeState, setInitiativeState] = useState([]);
     const [positions, setPositions] = useState([]);
     const [buttonsClickable, setButtonsClickable] = useState(false);
@@ -290,6 +290,8 @@ export default function Combat({handleProgChange, encounter}) {
         if (playersDown.length === 4) {
             // Render Game Over
             console.log('Game Over! You Lose');
+            handleLoss();
+            handleProgChange(7);
             return;
         }
 

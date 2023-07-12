@@ -10,6 +10,7 @@ import { findEncounter } from './utils/enemies';
 
 export default function Map() {
     const [progression, setProgression] = useState(0);
+    const [loss, setLoss] = useState(false);
 
     const encounter1 = findEncounter(2);
     const encounter2 = findEncounter(3);
@@ -25,26 +26,29 @@ export default function Map() {
             return <CreateParty handleProgChange={handleProgChange}/>;
         }
         if (progression === 2) {
-            return <Combat handleProgChange={handleProgChange} encounter={encounter1}/>
+            return <Combat handleProgChange={handleProgChange} handleLoss={handleLoss} encounter={encounter1}/>
         }
         if (progression === 3) {
-            return <Combat handleProgChange={handleProgChange} encounter={encounter2}/>
+            return <Combat handleProgChange={handleProgChange} handleLoss={handleLoss} encounter={encounter2}/>
         }
         if (progression === 4) {
-            return <Combat handleProgChange={handleProgChange} encounter={encounter3}/>
+            return <Combat handleProgChange={handleProgChange} handleLoss={handleLoss} encounter={encounter3}/>
         }
         if (progression === 5) {
-            return <Combat handleProgChange={handleProgChange} encounter={encounter4}/>
+            return <Combat handleProgChange={handleProgChange} handleLoss={handleLoss} encounter={encounter4}/>
         }
         if (progression === 6) {
-            return <Combat handleProgChange={handleProgChange} encounter={encounter5}/>
+            return <Combat handleProgChange={handleProgChange} handleLoss={handleLoss} encounter={encounter5}/>
         }
         if (progression === 7) {
-            return <GameOver handleProgChange={handleProgChange}/>
+            return <GameOver handleProgChange={handleProgChange} loss={loss} handleLoss={handleLoss}/>
         }
     };
 
     const handleProgChange = (prog) => setProgression(prog);
+
+    const handleLoss = () => setLoss(true);
+
 
     //if we can instead of hard coding 'map-main for className set it up so it takes the component title that is rendered 
     return (
