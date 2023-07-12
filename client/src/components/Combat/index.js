@@ -394,59 +394,63 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
                 <div className="initiative-bar">
                     {/* The name values are placeholders. The final version will have the positions listed in the paragraph tags, and images to depict who is who. */}
                     <div id="init-1">
-                        <img style={{ width: "50%", height: "20%" }} src={placeholderImage} alt="Image of spot 1 in Initiative order"/>
-                        <p className='init-p'>{initiativeCopy[0].name}</p>
+                        {/* <img style={{ width: "50%", height: "20%" }} src={placeholderImage} alt="Image of spot 1 in Initiative order"/> */}
+                        <p className='init-p'>1</p>
                     </div>
-                    <div id="init-1">
-                        <img style={{ width: "50%", height: "20%" }} src={placeholderImage} alt="Image of spot 1 in Initiative order"/>
-                        <p className='init-p'>{initiativeCopy[1].name}</p>
+                    <div id="init-2">
+                        {/* <img style={{ width: "50%", height: "20%" }} src={placeholderImage} alt="Image of spot 2 in Initiative order"/> */}
+                        <p className='init-p'>2</p>
                     </div>
-                    <div id="init-1">
-                        <img style={{ width: "50%", height: "20%" }} src={placeholderImage} alt="Image of spot 1 in Initiative order"/>
+                    <div id="init-3">
+                        <img style={{ width: "50%", height: "20%" }} src={placeholderImage} alt="Image of spot 3 in Initiative order"/>
                         <p className='init-p'>{initiativeCopy[2].name}</p>
                     </div>
-                    <div id="init-1">
-                        <img style={{ width: "50%", height: "20%" }} src={placeholderImage} alt="Image of spot 1 in Initiative order"/>
+                    <div id="init-4">
+                        <img style={{ width: "50%", height: "20%" }} src={placeholderImage} alt="Image of spot 4 in Initiative order"/>
                         <p className='init-p'>{initiativeCopy[3].name}</p>
                     </div>
-                    <div id="init-1">
-                        <img style={{ width: "50%", height: "20%" }} src={placeholderImage} alt="Image of spot 1 in Initiative order"/>
+                    <div id="init-5">
+                        <img style={{ width: "50%", height: "20%" }} src={placeholderImage} alt="Image of spot 5 in Initiative order"/>
                         <p className='init-p'>{initiativeCopy[4].name}</p>
                     </div>
-                    <div id="init-1">
-                        <img style={{ width: "50%", height: "20%" }} src={placeholderImage} alt="Image of spot 1 in Initiative order"/>
+                    <div id="init-6">
+                        <img style={{ width: "50%", height: "20%" }} src={placeholderImage} alt="Image of spot 6 in Initiative order"/>
                         <p className='init-p'>{initiativeCopy[5].name}</p>
                     </div>
-                    <div id="init-1">
-                        <img style={{ width: "50%", height: "20%" }} src={placeholderImage} alt="Image of spot 1 in Initiative order"/>
+                    <div id="init-7">
+                        <img style={{ width: "50%", height: "20%" }} src={placeholderImage} alt="Image of spot 7 in Initiative order"/>
                         <p className='init-p'>{initiativeCopy[6].name}</p>
                     </div>
-                    <div id="init-1">
-                        <img style={{ width: "50%", height: "20%" }} src={placeholderImage} alt="Image of spot 1 in Initiative order"/>
+                    <div id="init-8">
+                        <img style={{ width: "50%", height: "20%" }} src={placeholderImage} alt="Image of spot 8 in Initiative order"/>
                         <p className='init-p'>{initiativeCopy[7].name}</p>
                     </div>
                 </div>
                 <div className='combat-container'>
                     <div className='party-container'>
                         <button 
+                        className='party-btn' 
                         id='position-1' 
                         disabled={!buttonsClickable}
                         onClick={handleTargeting}>
                             {positions[0].name}
                         </button>
-                        <button 
+                        <button
+                        className='party-btn' 
                         id='position-2' 
                         disabled={!buttonsClickable}
                         onClick={handleTargeting}>
                             {positions[1].name}
                         </button>
-                        <button 
+                        <button
+                        className='party-btn' 
                         id='position-3' 
                         disabled={!buttonsClickable}
                         onClick={handleTargeting}>
                             {positions[2].name}
                         </button>
-                        <button 
+                        <button
+                        className='party-btn' 
                         id='position-4' 
                         disabled={!buttonsClickable}
                         onClick={handleTargeting}>
@@ -456,26 +460,33 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
 
                     <div className='actions'>
                     {initiativeCopy[0].isPlayer && (
-                        <button 
+                        <button
+                        className="action-btn" 
                         id='attack'
                         onClick={handleAction}>
                             Attack
                         </button>
                     )}
                     {initiativeCopy[0].isPlayer && (
-                        <button 
+                        <button
+                        className="action-btn" 
                         id='block'
                         onClick={handleAction}>
                             Block
                         </button>
                     )}
                     {initiativeCopy[0].isPlayer && !initiativeCopy[0].specialUsed && (
-                        <button 
+                        <button
+                        className="action-btn" 
                         id='special'
                         onClick={handleAction}>
                             Special
                         </button>
                     )}
+                    </div>
+
+                    <div id="player">
+                        <img src={placeholderImage} alt="Image of spot 1 in Initiative order"/>
                     </div>
 
                     <div id="target">
@@ -484,39 +495,37 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
                     
                     <div className="turn-taker">
                         {!initiativeCopy[0].isPlayer && !initiativeCopy[0].turnTaken && (
-                            <button onClick={startEnemyTurn}>Start Enemy Turn</button>
+                            <button id="start-btn" onClick={startEnemyTurn}>Start Enemy Turn</button>
                         )}
                         {!initiativeCopy[0].isPlayer && initiativeCopy[0].turnTaken && (
-                            <button onClick={wrapUpTurn}>End Enemy Turn</button>
+                            <button id="end-btn" onClick={wrapUpTurn}>End Enemy Turn</button>
                        )}     
                     </div>
                     
-                    
-                    <div id="player">
-                        <img src={placeholderImage} alt="Image of spot 1 in Initiative order"/>
-                    </div>
-
-
                     <div className='enemy-container'>
-                        <button 
+                        <button
+                        className='enemy-btn'
                         id='position-5' 
                         disabled={!buttonsClickable}
                         onClick={handleTargeting}>
                             {positions[4].name}
                         </button>
-                        <button 
+                        <button
+                        className='enemy-btn' 
                         id='position-6' 
                         disabled={!buttonsClickable}
                         onClick={handleTargeting}>
                             {positions[5].name}
                         </button>
-                        <button 
+                        <button
+                        className='enemy-btn' 
                         id='position-7' 
                         disabled={!buttonsClickable}
                         onClick={handleTargeting}>
                             {positions[6].name}
                         </button>
-                        <button 
+                        <button
+                        className='enemy-btn' 
                         id='position-8' 
                         disabled={!buttonsClickable}
                         onClick={handleTargeting}>
@@ -524,7 +533,7 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
                         </button>
                     </div>
                 </div>
-                <div className='combat-text'>
+                <div className="combat-text">
                     <p id='combat-log'>Time for battle!</p>
                 </div>
             </div>
