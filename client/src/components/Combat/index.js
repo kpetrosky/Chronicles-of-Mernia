@@ -455,12 +455,12 @@ export default function Combat({handleProgChange, encounter}) {
                         <img src={placeholderImage} alt="Image of spot 1 in Initiative order"/>
                     </div>
 
-                    <div className="turn-taker">
-                        <button onClick={wrapUpTurn}>End Enemy Turn</button>
-                    </div>
-                    
                     <div id="player">
                         <img src={placeholderImage} alt="Image of spot 1 in Initiative order"/>
+                    </div>
+
+                    <div className="turn-taker">
+                        <button onClick={wrapUpTurn}>End Enemy Turn</button>
                     </div>
 
                     <div className='enemy-container'>
