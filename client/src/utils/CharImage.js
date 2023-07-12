@@ -32,8 +32,8 @@ const imagePaths = [
         imagePath: "./characterImages/wizard.png"
     },
     {
-        characterClass: "Select Character Class...",
-        imagePath: "./placeholder.png"
+        characterClass: "Select Class...",
+        imagePath: "./characterImages/placeholder.png"
     },
     {
         characterClass: "Giant Wasp",

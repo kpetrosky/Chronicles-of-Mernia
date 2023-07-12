@@ -57,10 +57,10 @@
 .party-pic {
   border: 1px solid black;
   /* padding: 5%; */
-  width: 40%;
-  background-image: url(../images/placeholder.png);
-  background-size: contain;
-  height: 10vw;
+  width: 100%;
+  /* background-image: url(../images/placeholder.png); */
+  /* background-size: contain; */
+  height: 10vh;
   /* margin:  .2rem; */
 }
 
