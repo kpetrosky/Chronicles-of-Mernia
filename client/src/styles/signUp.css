@@ -23,13 +23,13 @@
 }
 
 .signup-h2 {
-   font-size: 2.2rem;
+   font-size: 2.3rem;
    text-align: center;
    height: 3rem;
    text-shadow: 0 0 30px rgb(199, 2, 2); 
    margin-top: 7.5rem;
-   color: grey;
-   padding-left: 3rem; 
+   color: rgb(253, 175, 175);
+   /* padding-left: 3rem;  */
 } 
 
 .signup-boxes {
@@ -37,7 +37,7 @@
   flex-wrap: wrap;
   justify-content: space-evenly;
    padding-top: 5%;
-   padding-left: 2.2rem; 
+   /* padding-left: 2.2rem;  */
    padding-bottom: 5%; 
   height: 5rem;
   /* border: 2px solid black;  */
@@ -49,7 +49,7 @@
   justify-content: space-around;
   flex-direction: row;
   /* border: 5px solid black;  */
-  padding-left: 2.5rem;
+  /* padding-left: 2.5rem; */
 }
 
 .login-box {
