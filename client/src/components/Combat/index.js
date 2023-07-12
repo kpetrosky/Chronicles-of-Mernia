@@ -333,7 +333,7 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
 
         if (enemiesDown.length === 4) {
             // Render next Combat
-            setCombatLog('Game Over! You Won');
+            setCombatLog('You Won! Prepare for your next battle');
 
             const updatePromises = []
 
