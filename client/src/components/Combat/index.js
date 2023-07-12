@@ -404,7 +404,7 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
     
     return (
         <div className="combat-main">
-            <h2 className="combat-h2">Prepare for Combat!</h2>
+            <h2 className="combat-h2">Initiative Order:</h2>
             {initiativeCopy.length === 8 ? (
             <div className="combat-screen">
                 <div className="initiative-bar">
@@ -439,7 +439,7 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
                         <button  
                         disabled={!buttonsClickable}
                         onClick={handleTargeting}
-                        className={!buttonsClickable ? "button-holder" : "button-holder-active"}>
+                        className={!buttonsClickable ? "button-holder position-1" : "button-holder-active position-1"}>
                             <img src={positions[0].imagePath} 
                             alt="Player 1" 
                             className="target-button position-1"/>
@@ -448,7 +448,7 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
                         <button  
                         disabled={!buttonsClickable}
                         onClick={handleTargeting}
-                        className={!buttonsClickable ? "button-holder" : "button-holder-active"}>
+                        className={!buttonsClickable ? "button-holder position-2" : "button-holder-active position-2"}>
                             <img src={positions[1].imagePath} 
                             alt="Player 2" 
                             className="target-button position-2"/>
@@ -457,7 +457,7 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
                         <button  
                         disabled={!buttonsClickable}
                         onClick={handleTargeting}
-                        className={!buttonsClickable ? "button-holder" : "button-holder-active"}>
+                        className={!buttonsClickable ? "button-holder position-3" : "button-holder-active position-3"}>
                             <img src={positions[2].imagePath} 
                             alt="Player 3" 
                             className="target-button position-3"/>
@@ -466,7 +466,7 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
                         <button  
                         disabled={!buttonsClickable}
                         onClick={handleTargeting}
-                        className={!buttonsClickable ? "button-holder" : "button-holder-active"}>
+                        className={!buttonsClickable ? "button-holder position-4" : "button-holder-active position-4"}>
                             <img src={positions[3].imagePath} 
                             alt="Player 4" 
                             className="target-button position-4"/>
@@ -532,7 +532,7 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
                         <button 
                         disabled={!buttonsClickable}
                         onClick={handleTargeting}
-                        className={!buttonsClickable ? "button-holder" : "button-holder-active-enemy"}>
+                        className={!buttonsClickable ? "button-holder position-5" : "button-holder-active-enemy position-5"}>
                             <img src={positions[4].imagePath} 
                             alt="Enemy 1" 
                             className="target-button position-5"/>
@@ -541,7 +541,7 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
                         <button  
                         disabled={!buttonsClickable}
                         onClick={handleTargeting}
-                        className={!buttonsClickable ? "button-holder" : "button-holder-active-enemy"}>
+                        className={!buttonsClickable ? "button-holder position-6" : "button-holder-active-enemy position-6"}>
                             <img src={positions[5].imagePath} 
                             alt="Enemy 2" 
                             className="target-button position-6"/>
@@ -550,7 +550,7 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
                         <button  
                         disabled={!buttonsClickable}
                         onClick={handleTargeting}
-                        className={!buttonsClickable ? "button-holder" : "button-holder-active-enemy"}>
+                        className={!buttonsClickable ? "button-holder position-7" : "button-holder-active-enemy position-7"}>
                             <img src={positions[6].imagePath} 
                             alt="Enemy 3" 
                             className="target-button position-7"/>
@@ -559,7 +559,7 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
                         <button  
                         disabled={!buttonsClickable}
                         onClick={handleTargeting}
-                        className={!buttonsClickable ? "button-holder" : "button-holder-active-enemy"}>
+                        className={!buttonsClickable ? "button-holder position-8" : "button-holder-active-enemy position-8"}>
                             <img src={positions[7].imagePath} 
                             alt="Enemy 4" 
                             className="target-button position-8"/>

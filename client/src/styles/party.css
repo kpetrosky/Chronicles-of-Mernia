@@ -38,30 +38,34 @@
 
 .member-box {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  /* flex-wrap: wrap; */
+  justify-content: space-evenly;
+  align-items: center;
   /* height: 4vw; */
   /* border: 2px solid black; */
 }
 
 .party-info {
-  border: 1px solid black;
+  border: 2px solid black;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   width: 40%;
   /* margin: .2rem; */
   height: 10vw;
   font-size: 2vw;
+  /* margin: .1rem; */
 }
 
 .party-pic {
-  border: 1px solid black;
+  border: 2px solid black;
+  justify-content: center;
+  align-items: center;
   /* padding: 5%; */
-  width: 100%;
-  /* background-image: url(../images/placeholder.png); */
+  width: 10vw;
+  /* background-color: white; */
   /* background-size: contain; */
-  height: 10vh;
-  /* margin:  .2rem; */
+  height: 10vw;
+  /* margin: .1rem; */
 }
 
 #label1 {
@@ -129,7 +133,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100px;;
 }
 
 /* #submit-btn {
@@ -139,10 +142,14 @@
   } */
 
 #create-btn {
-   
-    margin: .5%;
+   margin: .5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-image: linear-gradient(to right, rgba(159, 39, 39, 0.816), rgba(176, 127, 52, 0.9));
     color: white;
-    width: 20%;
-    height:45%;
+    width: 10vw;
+    height: 5vw;
+    padding: 1.5rem;
+  
   }
