@@ -11,11 +11,17 @@ export default function Combat({handleProgChange, encounter}) {
     const [initiativeState, setInitiativeState] = useState([]);
     const [positions, setPositions] = useState([]);
     const [buttonsClickable, setButtonsClickable] = useState(false);
+    // const [combatLog, setCombatLog] = useState('');
     
     const { data: userData } = useQuery(QUERY_USER);
     
     const [updateUserProgression] = useMutation(UPDATE_USER_PROGRESSION);
     const [updatePartyMemberHp] = useMutation(UPDATE_PARTY_MEMBER_HP);
+
+    // useEffect(() =>{
+    //     const combatLogElement = document.getElementById('combat-log');
+    //     combatLogElement.value = combatLog;
+    // }, [combatLog]);
     
     useEffect(() => {
         function battleReadyParty(party) {
@@ -223,7 +229,7 @@ export default function Combat({handleProgChange, encounter}) {
             } else if (attacker.weapon) {
                 let damage = attacker.attack + diceRoller(attacker.weapon.damage);
                 targetObject.currentHp = targetObject.currentHp - damage;
-                console.log(`${attacker.name} hit ${targetObject.name}(${targetObject.position}) for ${damage} with their ${attacker.weapon.name}!`);
+                // setCombatLog(`${attacker.name} hit ${targetObject.name}(${targetObject.position}) for ${damage} with their ${attacker.weapon.name}!`);
                 checkIfDown(targetObject);
                 return;
             }
@@ -471,8 +477,8 @@ export default function Combat({handleProgChange, encounter}) {
                         {positions[7].name}
                     </button>
                 </div>
-                <div id='combat-log'>
-                    <p>(combat log)</p>
+                <div>
+                    <p id='combat-log'></p>
                 </div>
             </div>
             ) : (
