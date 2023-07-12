@@ -11,17 +11,23 @@ export default function Combat({handleProgChange, encounter}) {
     const [initiativeState, setInitiativeState] = useState([]);
     const [positions, setPositions] = useState([]);
     const [buttonsClickable, setButtonsClickable] = useState(false);
-    // const [combatLog, setCombatLog] = useState('');
+    const [combatLog, setCombatLog] = useState('');
     
     const { data: userData } = useQuery(QUERY_USER);
     
     const [updateUserProgression] = useMutation(UPDATE_USER_PROGRESSION);
     const [updatePartyMemberHp] = useMutation(UPDATE_PARTY_MEMBER_HP);
 
-    // useEffect(() =>{
-    //     const combatLogElement = document.getElementById('combat-log');
-    //     combatLogElement.value = combatLog;
-    // }, [combatLog]);
+    const updateCombatLog = () => {
+        const combatLogElement = document.getElementById('combat-log');
+        if (combatLogElement) {
+            combatLogElement.textContent = combatLog;
+        }
+    }
+
+    useEffect(() => {
+        updateCombatLog();
+    }, [combatLog]);
     
     useEffect(() => {
         function battleReadyParty(party) {
@@ -48,6 +54,7 @@ export default function Combat({handleProgChange, encounter}) {
                     currentHp: hp,
                     isDown: false,
                     isPlayer: false,
+                    turnTaken: false,
                     position: position
                 }
             });
@@ -71,18 +78,20 @@ export default function Combat({handleProgChange, encounter}) {
         setPositions(positionOrder);
     }, [userData, encounter]);
 
-    function checkIfDown(targetObject) {
+    async function checkIfDown(targetObject) {
         if (targetObject.currentHp <= 0) {
             targetObject.currentHp = 0;
             targetObject.isDown = true;
-            console.log(`${targetObject.name} is down!`);
+            await letThatSinkIn();
+            setCombatLog(`${targetObject.name} is down!`);
         }
     }
     
-    function checkIfRevived(targetObject) {
+    async function checkIfRevived(targetObject) {
         if (targetObject.isDown && targetObject.currentHp > 0) {
             targetObject.isDown = false;
-            console.log(`${targetObject.name} has been revived!`);
+            await letThatSinkIn();
+            setCombatLog(`${targetObject.name} has been revived!`);
         }
     }
 
@@ -94,6 +103,7 @@ export default function Combat({handleProgChange, encounter}) {
             setButtonsClickable(true);
         } else if (event.target.id === 'block') {
             initiativeCopy[0].isBlocking = true;
+            setCombatLog(`${initiativeCopy[0].name} is blocking!`);
             wrapUpTurn();
         } else if (event.target.id === 'special') {
             initiativeCopy[0].isBlocking = false;
@@ -103,7 +113,7 @@ export default function Combat({handleProgChange, encounter}) {
                     specialUser.attack = specialUser.attack + specialUser.special;
                     specialUser.specialUsed = true;
                     specialUser.specialUsedThisTurn = true;
-                    console.log(`${specialUser.name} increased their Attack!`);
+                    setCombatLog(`${specialUser.name} increased their attack stat!`);
                     await letThatSinkIn();
                     wrapUpTurn();
                     break;
@@ -111,7 +121,7 @@ export default function Combat({handleProgChange, encounter}) {
                     specialUser.dodge = specialUser.dodge + specialUser.special;
                     specialUser.specialUsed = true;
                     specialUser.specialUsedThisTurn = true;
-                    console.log(`${specialUser.name} increased their Dodge!`);
+                    setCombatLog(`${specialUser.name} increased their dodge stat!`);
                     await letThatSinkIn();
                     wrapUpTurn();
                     break;
@@ -208,7 +218,8 @@ export default function Combat({handleProgChange, encounter}) {
             if (targetObject.isPlayer) {
                 const numberToBeat = diceRoller([1,100]);
                 if (targetObject.dodge >= numberToBeat) {
-                    console.log(`${targetObject.name} dodged the attack from ${attacker.name}!`);
+                    setCombatLog(`${targetObject.name} dodged the attack from ${attacker.name}!`);
+                    initiativeCopy[0].turnTaken = true;
                     return;
                 } else if (targetObject.isBlocking) {
                     let damage = attacker.attack - targetObject.defense;
@@ -216,20 +227,22 @@ export default function Combat({handleProgChange, encounter}) {
                         damage = 0;
                     }
                     targetObject.currentHp = targetObject.currentHp - damage;
-                    console.log(`${targetObject.name} blocked the attack from ${attacker.name} and took ${damage} damage!`);
+                    setCombatLog(`${targetObject.name} blocked the attack from ${attacker.name} and took ${damage} damage!`);
                     checkIfDown(targetObject);
+                    initiativeCopy[0].turnTaken = true;
                     return;
                 } else {
                     let damage = attacker.attack;
                     targetObject.currentHp = targetObject.currentHp - damage;
-                    console.log(`${attacker.name} hit ${targetObject.name}(${targetObject.position}) for ${damage}!`);
+                    setCombatLog(`${attacker.name}(${attacker.position}) hit ${targetObject.name} for ${damage}!`);
                     checkIfDown(targetObject);
+                    initiativeCopy[0].turnTaken = true;
                     return;
                 }
             } else if (attacker.weapon) {
                 let damage = attacker.attack + diceRoller(attacker.weapon.damage);
                 targetObject.currentHp = targetObject.currentHp - damage;
-                // setCombatLog(`${attacker.name} hit ${targetObject.name}(${targetObject.position}) for ${damage} with their ${attacker.weapon.name}!`);
+                setCombatLog(`${attacker.name} dealt ${damage} damage to ${targetObject.name}(${targetObject.position}) using their ${attacker.weapon.name}!`);
                 checkIfDown(targetObject);
                 return;
             }
@@ -242,7 +255,7 @@ export default function Combat({handleProgChange, encounter}) {
             if (targetObject.currentHp > targetObject.maxHp) {
                 targetObject.currentHp = targetObject.maxHp;
             }
-            console.log(`${healer.name} healed ${targetObject.name} for ${healer.special}HP!`);
+            setCombatLog(`${healer.name} healed ${targetObject.name} for ${healer.special}HP!`);
             checkIfRevived(targetObject);
             return;
     }
@@ -253,7 +266,7 @@ export default function Combat({handleProgChange, encounter}) {
         if (buffer.characterClass === "Paladin") {
             for (const teamMember of team) {
                 teamMember.defense = teamMember.defense + buffer.special;
-                console.log(`${buffer.name} improved ${teamMember.name}'s defense stat!`);
+                setCombatLog(`${buffer.name} improved ${teamMember.name}'s defense stat!`);
                 await letThatSinkIn();
                 continue;
             }
@@ -262,7 +275,7 @@ export default function Combat({handleProgChange, encounter}) {
         if (buffer.characterClass === "Fighter") {
             for (const teamMember of team) {
                 teamMember.attack = teamMember.attack + buffer.special;
-                console.log(`${buffer.name} improved ${teamMember.name}'s attack stat!`);
+                setCombatLog(`${buffer.name} improved ${teamMember.name}'s attack stat!`);
                 await letThatSinkIn();
                 continue;
             }
@@ -282,6 +295,10 @@ export default function Combat({handleProgChange, encounter}) {
                 initiativeCopy[0].specialUsedThisTurn = false;
             }
         }
+
+        if (!initiativeCopy[0].isPlayer && initiativeCopy[0].turnTaken) {
+            initiativeCopy[0].turnTaken = false;
+        }
         
 
         const playersDown = initiativeCopy.filter((obj) => obj.isPlayer && obj.isDown);
@@ -289,13 +306,13 @@ export default function Combat({handleProgChange, encounter}) {
 
         if (playersDown.length === 4) {
             // Render Game Over
-            console.log('Game Over! You Lose');
+            setCombatLog('Game Over! You Lose');
             return;
         }
 
         if (enemiesDown.length === 4) {
             // Render next Combat
-            console.log('Game Over! You Won');
+            setCombatLog('Game Over! You Won');
 
             const updatePromises = []
 
@@ -338,8 +355,10 @@ export default function Combat({handleProgChange, encounter}) {
         setInitiativeState(shiftInitiative);
     }
     
-    if (initiativeCopy.length === 8) {
+    function startEnemyTurn() {
         if (!initiativeCopy[0].isPlayer) {
+            initiativeCopy[0].turnTaken = true;
+            setInitiativeState(initiativeCopy);
             if (!initiativeCopy[0].isDown) {
                 // let targetedPlayer;
                 // do {
@@ -350,6 +369,12 @@ export default function Combat({handleProgChange, encounter}) {
                 handleAttack(targetedPlayer);
             } 
         }
+        if (initiativeCopy[0].isDown) {
+            wrapUpTurn();
+        }
+    }
+
+    if (initiativeCopy.length === 8) {
         if (initiativeCopy[0].isDown) {
             wrapUpTurn();
         }
@@ -446,7 +471,12 @@ export default function Combat({handleProgChange, encounter}) {
                     )}
                 </div>
                 <div id="turn-taker">
+                    {!initiativeCopy[0].isPlayer && !initiativeCopy[0].turnTaken && (
+                        <button onClick={startEnemyTurn}>Start Enemy Turn</button>
+                    )}
+                    {!initiativeCopy[0].isPlayer && initiativeCopy[0].turnTaken && (
                         <button onClick={wrapUpTurn}>End Enemy Turn</button>
+                    )}     
                 </div>
                 <div id="target">
 
@@ -478,7 +508,7 @@ export default function Combat({handleProgChange, encounter}) {
                     </button>
                 </div>
                 <div>
-                    <p id='combat-log'></p>
+                    <p id='combat-log'>Time for battle!</p>
                 </div>
             </div>
             ) : (
