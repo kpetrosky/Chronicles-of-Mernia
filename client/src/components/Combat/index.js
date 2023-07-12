@@ -7,6 +7,7 @@ import {
 import { QUERY_USER } from '../../utils/queries';
 import { UPDATE_USER_PROGRESSION, UPDATE_PARTY_MEMBER_HP } from '../../utils/mutations';
 import "../../styles/combat-1.css";
+import { findImagePaths } from "../../utils/CharImage";
 import placeholderImage from '../../images/placeholder.png'
 
 export default function Combat({handleProgChange, encounter, handleLoss}) {
@@ -14,6 +15,9 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
     const [positions, setPositions] = useState([]);
     const [buttonsClickable, setButtonsClickable] = useState(false);
     const [combatLog, setCombatLog] = useState('');
+    const [targetBox, setTargetBox] = useState({ imagePath: "./characterImages/placeholder.png"})
+
+
     
     const { data: userData } = useQuery(QUERY_USER);
     
@@ -35,13 +39,15 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
         function battleReadyParty(party) {
             const partyMembers = party?.user.party.members || [];
             return partyMembers.map((object) => {
+                const imagePath = findImagePaths(object.characterClass)
                 return {
                     ...object,
                     isBlocking: false,
                     isDown: false,
                     isPlayer: true,
                     specialUsed: false,
-                    specialUsedThisTurn: false
+                    specialUsedThisTurn: false,
+                    imagePath: imagePath
                 }
             });
         };
@@ -51,13 +57,15 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
             return enemies.map((object) => {
                 const position = enemies.indexOf(object) + 5;
                 const { hp } = object;
+                const imagePath = findImagePaths(object.name)
                 return {
                     ...object,
                     currentHp: hp,
                     isDown: false,
                     isPlayer: false,
                     turnTaken: false,
-                    position: position
+                    position: position,
+                    imagePath: imagePath
                 }
             });
         };
@@ -97,6 +105,11 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
         }
     }
 
+    function matchHp(positionObject) {
+        const initiativeObject = initiativeCopy.find((object) => object.position === positionObject.position);
+        return initiativeObject.currentHp;
+    }
+
     const initiativeCopy = [...initiativeState];
 
     const handleAction = async (event) => {
@@ -131,6 +144,7 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
                     specialUser.attack = specialUser.attack + specialUser.special;
                     specialUser.specialUsed = true;
                     specialUser.specialUsedThisTurn = true;
+                    setCombatLog("Who would you like to attack (double damage)?")
                     setButtonsClickable(true);
                 break;
                 case 'Wizard':
@@ -150,6 +164,7 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
                 case 'Cleric':
                     specialUser.specialUsed = true;
                     specialUser.specialUsedThisTurn = true;
+                    setCombatLog("Who would you like to heal?")
                     setButtonsClickable(true);
                     break;
                 case 'Druid':
@@ -185,8 +200,9 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
     }
 
     const handleTargeting = async (event) => {
-        const newTarget = event.target.id.slice(-1);
+        const newTarget = event.target.className.slice(-1);
         const newTargetInt = parseInt(newTarget);
+        setTargetBox(positions[newTargetInt - 1]);
         if (!initiativeCopy[0].specialUsedThisTurn) {
             handleAttack(newTargetInt);
             setButtonsClickable(false);
@@ -302,6 +318,7 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
             initiativeCopy[0].turnTaken = false;
         }
         
+        setTargetBox({ imagePath: "./characterImages/placeholder.png"});
 
         const playersDown = initiativeCopy.filter((obj) => obj.isPlayer && obj.isDown);
         const enemiesDown = initiativeCopy.filter((obj) => !obj.isPlayer && obj.isDown);
@@ -371,6 +388,7 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
                 // } while (!targetedPlayer);
                 const targetedPlayer = diceRoller([1,4]);
                 handleAttack(targetedPlayer);
+                setTargetBox(positions[targetedPlayer - 1]);
             } 
         }
         if (initiativeCopy[0].isDown) {
@@ -383,8 +401,6 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
             wrapUpTurn();
         }
     }
-
-    
     
     return (
         <div className="combat-main">
@@ -392,65 +408,69 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
             {initiativeCopy.length === 8 ? (
             <div className="combat-screen">
                 <div className="initiative-bar">
-                    {/* The name values are placeholders. The final version will have the positions listed in the paragraph tags, and images to depict who is who. */}
                     <div id="init-1">
-                        <img style={{ width: "50%", height: "20%" }} src={placeholderImage} alt="Image of spot 1 in Initiative order"/>
-                        <p className='init-p'>{initiativeCopy[0].name}</p>
+                        <img className="init-img" src={initiativeCopy[0].imagePath} alt="Turn 1 in Initiative Order"/>
                     </div>
                     <div id="init-1">
-                        <img style={{ width: "50%", height: "20%" }} src={placeholderImage} alt="Image of spot 1 in Initiative order"/>
-                        <p className='init-p'>{initiativeCopy[1].name}</p>
+                        <img className="init-img" src={initiativeCopy[1].imagePath} alt="Turn 2 in Initiative Order"/>
                     </div>
                     <div id="init-1">
-                        <img style={{ width: "50%", height: "20%" }} src={placeholderImage} alt="Image of spot 1 in Initiative order"/>
-                        <p className='init-p'>{initiativeCopy[2].name}</p>
+                        <img className="init-img" src={initiativeCopy[2].imagePath} alt="Turn 3 in Initiative Order"/>
                     </div>
                     <div id="init-1">
-                        <img style={{ width: "50%", height: "20%" }} src={placeholderImage} alt="Image of spot 1 in Initiative order"/>
-                        <p className='init-p'>{initiativeCopy[3].name}</p>
+                        <img className="init-img" src={initiativeCopy[3].imagePath} alt="Turn 4 in Initiative Order"/>
                     </div>
                     <div id="init-1">
-                        <img style={{ width: "50%", height: "20%" }} src={placeholderImage} alt="Image of spot 1 in Initiative order"/>
-                        <p className='init-p'>{initiativeCopy[4].name}</p>
+                        <img className="init-img" src={initiativeCopy[4].imagePath} alt="Turn 5 in Initiative Order"/>
                     </div>
                     <div id="init-1">
-                        <img style={{ width: "50%", height: "20%" }} src={placeholderImage} alt="Image of spot 1 in Initiative order"/>
-                        <p className='init-p'>{initiativeCopy[5].name}</p>
+                        <img className="init-img" src={initiativeCopy[5].imagePath} alt="Turn 6 in Initiative Order"/>
                     </div>
                     <div id="init-1">
-                        <img style={{ width: "50%", height: "20%" }} src={placeholderImage} alt="Image of spot 1 in Initiative order"/>
-                        <p className='init-p'>{initiativeCopy[6].name}</p>
+                        <img className="init-img" src={initiativeCopy[6].imagePath} alt="Turn 7 in Initiative Order"/>
                     </div>
                     <div id="init-1">
-                        <img style={{ width: "50%", height: "20%" }} src={placeholderImage} alt="Image of spot 1 in Initiative order"/>
-                        <p className='init-p'>{initiativeCopy[7].name}</p>
+                        <img className="init-img" src={initiativeCopy[7].imagePath} alt="Turn 8 in Initiative Order"/>
                     </div>
                 </div>
+                {/* WARNING: Do NOT remove any className 'position-x' OR place any classNames AFTER them! They are necessary for targeting. */}
                 <div className='combat-container'>
                     <div className='party-container'>
-                        <button 
-                        id='position-1' 
+                        <button  
                         disabled={!buttonsClickable}
-                        onClick={handleTargeting}>
-                            {positions[0].name}
+                        onClick={handleTargeting}
+                        className={!buttonsClickable ? "button-holder" : "button-holder-active"}>
+                            <img src={positions[0].imagePath} 
+                            alt="Player 1" 
+                            className="target-button position-1"/>
+                            <p className="hp-ratio position-1">{`${matchHp(positions[0])}/${positions[0].maxHp}`}</p>                            
                         </button>
-                        <button 
-                        id='position-2' 
+                        <button  
                         disabled={!buttonsClickable}
-                        onClick={handleTargeting}>
-                            {positions[1].name}
+                        onClick={handleTargeting}
+                        className={!buttonsClickable ? "button-holder" : "button-holder-active"}>
+                            <img src={positions[1].imagePath} 
+                            alt="Player 2" 
+                            className="target-button position-2"/>
+                            <p className="hp-ratio position-2">{`${matchHp(positions[1])}/${positions[1].maxHp}`}</p>
                         </button>
-                        <button 
-                        id='position-3' 
+                        <button  
                         disabled={!buttonsClickable}
-                        onClick={handleTargeting}>
-                            {positions[2].name}
+                        onClick={handleTargeting}
+                        className={!buttonsClickable ? "button-holder" : "button-holder-active"}>
+                            <img src={positions[2].imagePath} 
+                            alt="Player 3" 
+                            className="target-button position-3"/>
+                            <p className="hp-ratio position-3">{`${matchHp(positions[2])}/${positions[2].maxHp}`}</p>
                         </button>
-                        <button 
-                        id='position-4' 
+                        <button  
                         disabled={!buttonsClickable}
-                        onClick={handleTargeting}>
-                            {positions[3].name}
+                        onClick={handleTargeting}
+                        className={!buttonsClickable ? "button-holder" : "button-holder-active"}>
+                            <img src={positions[3].imagePath} 
+                            alt="Player 4" 
+                            className="target-button position-4"/>
+                            <p className="hp-ratio position-4">{`${matchHp(positions[3])}/${positions[3].maxHp}`}</p>
                         </button>
                     </div>
 
@@ -478,8 +498,13 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
                     )}
                     </div>
 
-                    <div id="target">
-                        <img src={placeholderImage} alt="Image of spot 1 in Initiative order"/>
+                    <div id="player">
+                        {initiativeCopy[0].isPlayer && (
+                            <img src={initiativeCopy[0].imagePath} alt="Current Player"/>
+                        )}
+                        {!initiativeCopy[0].isPlayer && (
+                            <img src={targetBox.imagePath} alt="Current Enemy Target"/>
+                        )}
                     </div>
                     
                     <div className="turn-taker">
@@ -491,36 +516,51 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
                        )}     
                     </div>
                     
-                    
-                    <div id="player">
-                        <img src={placeholderImage} alt="Image of spot 1 in Initiative order"/>
+                    <div id="target">
+                        {!initiativeCopy[0].isPlayer && (
+                            <img src={initiativeCopy[0].imagePath} alt="Current Enemy"/>
+                        )}
+                        {initiativeCopy[0].isPlayer && (
+                            <img src={targetBox.imagePath} alt="Current Player Target"/>
+                        )}
                     </div>
-
 
                     <div className='enemy-container'>
                         <button 
-                        id='position-5' 
                         disabled={!buttonsClickable}
-                        onClick={handleTargeting}>
-                            {positions[4].name}
+                        onClick={handleTargeting}
+                        className={!buttonsClickable ? "button-holder" : "button-holder-active-enemy"}>
+                            <img src={positions[4].imagePath} 
+                            alt="Enemy 1" 
+                            className="target-button position-5"/>
+                            <p className="hp-ratio position-5">{`${matchHp(positions[4])}/${positions[4].hp}`}</p>
                         </button>
-                        <button 
-                        id='position-6' 
+                        <button  
                         disabled={!buttonsClickable}
-                        onClick={handleTargeting}>
-                            {positions[5].name}
+                        onClick={handleTargeting}
+                        className={!buttonsClickable ? "button-holder" : "button-holder-active-enemy"}>
+                            <img src={positions[5].imagePath} 
+                            alt="Enemy 2" 
+                            className="target-button position-6"/>
+                            <p className="hp-ratio position-6">{`${matchHp(positions[5])}/${positions[5].hp}`}</p>
                         </button>
-                        <button 
-                        id='position-7' 
+                        <button  
                         disabled={!buttonsClickable}
-                        onClick={handleTargeting}>
-                            {positions[6].name}
+                        onClick={handleTargeting}
+                        className={!buttonsClickable ? "button-holder" : "button-holder-active-enemy"}>
+                            <img src={positions[6].imagePath} 
+                            alt="Enemy 3" 
+                            className="target-button position-7"/>
+                            <p className="hp-ratio position-7">{`${matchHp(positions[6])}/${positions[6].hp}`}</p>
                         </button>
-                        <button 
-                        id='position-8' 
+                        <button  
                         disabled={!buttonsClickable}
-                        onClick={handleTargeting}>
-                            {positions[7].name}
+                        onClick={handleTargeting}
+                        className={!buttonsClickable ? "button-holder" : "button-holder-active-enemy"}>
+                            <img src={positions[7].imagePath} 
+                            alt="Enemy 4" 
+                            className="target-button position-8"/>
+                            <p className="hp-ratio position-8">{`${matchHp(positions[7])}/${positions[7].hp}`}</p>
                         </button>
                     </div>
                 </div>

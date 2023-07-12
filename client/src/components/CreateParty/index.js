@@ -21,6 +21,7 @@ function ClassForm({ handleProgChange }) {
   // Map over array and update pm model using graphql
   // Then get all the newly created pm models and put into array, tie to party document
   // create party instance and tie to user automatically
+  const [imagePaths, setImagePaths] = useState(["./characterImages/placeholder.png","./characterImages/placeholder.png","./characterImages/placeholder.png","./characterImages/placeholder.png"]);
 
   const { data: weaponsData } = useQuery(QUERY_WEAPONS);
   const [addPartyMember] = useMutation(ADD_PARTY_MEMBER);
@@ -77,7 +78,7 @@ function ClassForm({ handleProgChange }) {
     };
 
     const isUnselected = (value) => {
-      return value === "Select Character Class...";
+      return value === "Select Class...";
     };
 
     const containsEmpty = characterArray.some((character) => {
@@ -157,13 +158,18 @@ function ClassForm({ handleProgChange }) {
   ];
 
   function handleImagePaths() {
-    const characterClass1 = document.getElementById('class1');
-    const characterClass2 = document.getElementById('class2');
-    const characterClass3 = document.getElementById('class3');
-    const characterClass4 = document.getElementById('class4');
-    const characterClassArray = [characterClass1, characterClass2, characterClass3, characterClass4];
+    const characterClass1 = document.getElementById('class1').value;
+    const characterClass2 = document.getElementById('class2').value;
+    const characterClass3 = document.getElementById('class3').value;
+    const characterClass4 = document.getElementById('class4').value;
 
-    
+    const characterImagePath1 = findImagePaths(characterClass1);
+    const characterImagePath2 = findImagePaths(characterClass2);
+    const characterImagePath3 = findImagePaths(characterClass3);
+    const characterImagePath4 = findImagePaths(characterClass4);
+
+    const characterImagePathArray = [characterImagePath1, characterImagePath2, characterImagePath3, characterImagePath4];
+    setImagePaths(characterImagePathArray);
   }
 
   return (
@@ -184,7 +190,7 @@ function ClassForm({ handleProgChange }) {
                   id="name1"
                   name="name"
                 />
-                <select className="party-class" id="class1">
+                <select className="party-class" id="class1" onChange={handleImagePaths}>
                   <option>Select Class...</option>
                   {characterClasses.map((CharacterClasses) => (
                     <option key={CharacterClasses} value={CharacterClasses}>
@@ -193,8 +199,8 @@ function ClassForm({ handleProgChange }) {
                   ))}
                 </select>
               </div>
-              <div className="party-pic">
-                <img></img>
+              <div>
+                <img className="party-pic" src={`${imagePaths[0]}`} alt="First Character"/>
               </div>
             </div>
           </section>
@@ -211,7 +217,7 @@ function ClassForm({ handleProgChange }) {
                   id="name2"
                   name="name"
                 />
-                <select className="party-class" id="class2">
+                <select className="party-class" id="class2" onChange={handleImagePaths}>
                   <option>Select Class...</option>
                   {characterClasses.map((CharacterClasses) => (
                     <option key={CharacterClasses} value={CharacterClasses}>
@@ -220,7 +226,9 @@ function ClassForm({ handleProgChange }) {
                   ))}
                 </select>
               </div>
-              <div className="party-pic"></div>
+              <div>
+                <img className="party-pic" src={`${imagePaths[1]}`} alt="Second Character"/>
+              </div>
             </div>
           </section>
           <section className="members" id="member-3">
@@ -236,8 +244,8 @@ function ClassForm({ handleProgChange }) {
                   id="name3"
                   name="name"
                 />
-                <select className="party-class" id="class3">
-                  <option>Select Character Class...</option>
+                <select className="party-class" id="class3" onChange={handleImagePaths}>
+                  <option>Select Class...</option>
                   {characterClasses.map((CharacterClasses) => (
                     <option key={CharacterClasses} value={CharacterClasses}>
                       {CharacterClasses}
@@ -245,7 +253,9 @@ function ClassForm({ handleProgChange }) {
                   ))}
                 </select>
               </div>
-              <div className="party-pic"></div>
+              <div>
+                <img className="party-pic" src={`${imagePaths[2]}`} alt="Third Character"/>
+              </div>
             </div>
           </section>
           <section className="members" id="member-4">
@@ -261,8 +271,8 @@ function ClassForm({ handleProgChange }) {
                   id="name4"
                   name="name"
                 />
-                <select className="party-class" id="class4">
-                  <option>Select Character Class...</option>
+                <select className="party-class" id="class4" onChange={handleImagePaths}>
+                  <option>Select Class...</option>
                   {characterClasses.map((CharacterClasses) => (
                     <option key={CharacterClasses} value={CharacterClasses}>
                       {CharacterClasses}
@@ -270,12 +280,13 @@ function ClassForm({ handleProgChange }) {
                   ))}
                 </select>
               </div>
-              <div className="party-pic"></div>
+              <div>
+                <img className="party-pic" src={`${imagePaths[3]}`} alt="Fourth Character"/>
+              </div>
             </div>
           </section>
         </div>
         <div className="button-party">
-          {/* <button id="submit-btn" type="submit">Submit</button> */}
           <button id="create-btn" type="submit">
             Create Party
           </button>
