@@ -39,7 +39,7 @@ button:disabled {
     height: 4rem;
 }
 
-#init-1 {
+/* #init-1 {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -125,7 +125,7 @@ button:disabled {
     border: 2px solid red;
     width: 80%;
     padding: 1rem;   
-}
+} */
 
 /* .init-p {
     

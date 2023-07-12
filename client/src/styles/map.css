@@ -4,6 +4,11 @@ HTML{
     height: 100vh;
     
 }
+
+h1 {
+    margin-bottom: 0px;
+}
+
 .main-0 {
     background-image: url(../images/dungeonKind.jpeg);
     background-size: cover;
