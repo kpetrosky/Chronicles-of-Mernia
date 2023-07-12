@@ -290,6 +290,9 @@ function ClassForm({ handleProgChange }) {
           <button id="create-btn" type="submit">
             Create Party
           </button>
+          {/* <button id="create-btn" type="button" onClick={handleProgChange(7)}>
+            Go to End
+          </button> */}
         </div>
       </form>
     </div>

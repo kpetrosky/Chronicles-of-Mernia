@@ -476,21 +476,24 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
 
                     <div className='actions'>
                     {initiativeCopy[0].isPlayer && (
-                        <button 
+                        <button
+                        className="action-btn" 
                         id='attack'
                         onClick={handleAction}>
                             Attack
                         </button>
                     )}
                     {initiativeCopy[0].isPlayer && (
-                        <button 
+                        <button
+                        className="action-btn" 
                         id='block'
                         onClick={handleAction}>
                             Block
                         </button>
                     )}
                     {initiativeCopy[0].isPlayer && !initiativeCopy[0].specialUsed && (
-                        <button 
+                        <button
+                        className="action-btn" 
                         id='special'
                         onClick={handleAction}>
                             Special
@@ -509,10 +512,10 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
                     
                     <div className="turn-taker">
                         {!initiativeCopy[0].isPlayer && !initiativeCopy[0].turnTaken && (
-                            <button onClick={startEnemyTurn}>Start Enemy Turn</button>
+                            <button id="start-btn" onClick={startEnemyTurn}>Start Enemy Turn</button>
                         )}
                         {!initiativeCopy[0].isPlayer && initiativeCopy[0].turnTaken && (
-                            <button onClick={wrapUpTurn}>End Enemy Turn</button>
+                            <button id="end-btn" onClick={wrapUpTurn}>End Enemy Turn</button>
                        )}     
                     </div>
                     
@@ -564,7 +567,7 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
                         </button>
                     </div>
                 </div>
-                <div className='combat-text'>
+                <div className="combat-text">
                     <p id='combat-log'>Time for battle!</p>
                 </div>
             </div>
