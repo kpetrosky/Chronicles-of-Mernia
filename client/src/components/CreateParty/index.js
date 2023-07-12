@@ -115,7 +115,8 @@ function ClassForm({handleProgChange}) {
         });
         handleProgChange(2);
       } catch (error) {
-        console.error("Error adding Party Members:", error)
+        console.error("Error adding Party Members:", error);
+        alert("There was an error adding your party members. Please try again!");
       }
     }
 

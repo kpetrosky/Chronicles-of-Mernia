@@ -42,8 +42,10 @@ export default function SignUp({ handleProgChange }) {
         Auth.login(data.login.token);
         const userProgression = data.login.user.progression;
         handleProgChange(userProgression);
-      } catch (loginError) {
+      } catch (error) {
+        console.error(error);
         console.error(loginError);
+        alert("Username or password is invalid. Please try again!");
       }
     }
     if (event.target.id === "signUp-btn") {
@@ -55,6 +57,8 @@ export default function SignUp({ handleProgChange }) {
         handleProgChange(1);
       } catch (e) {
         console.error(e);
+        console.error(addUserError);
+        alert("Username or password is invalid. Please try again!");
       }
     }
 
