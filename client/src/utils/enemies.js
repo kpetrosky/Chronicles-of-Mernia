@@ -107,7 +107,7 @@ const encounters = [
                 speed: [4, 6]
             },
             {
-                name: "Eldritch ooze",
+                name: "Eldritch Ooze",
                 hp: 40,
                 attack: 30,
                 speed: [4, 6]
@@ -136,7 +136,7 @@ const encounters = [
                 speed: [4, 6]
             },
             {
-                name: "Eldritch ooze",
+                name: "Eldritch Ooze",
                 hp: 40,
                 attack: 30,
                 speed: [4, 6]

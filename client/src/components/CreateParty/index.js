@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_WEAPONS } from "../../utils/queries";
 import {
@@ -8,6 +8,7 @@ import {
   UPDATE_USER_PROGRESSION,
 } from "../../utils/mutations";
 import { findBaseStats } from "../../utils/baseStats";
+import { findImagePaths } from "../../utils/CharImage";
 import "../../styles/party.css";
 
 function ClassForm({ handleProgChange }) {
@@ -155,6 +156,16 @@ function ClassForm({ handleProgChange }) {
     "Fighter",
   ];
 
+  function handleImagePaths() {
+    const characterClass1 = document.getElementById('class1');
+    const characterClass2 = document.getElementById('class2');
+    const characterClass3 = document.getElementById('class3');
+    const characterClass4 = document.getElementById('class4');
+    const characterClassArray = [characterClass1, characterClass2, characterClass3, characterClass4];
+
+    
+  }
+
   return (
     <div className="party-main">
       <h2 className="party-h2">Create Your Party!</h2>
@@ -182,7 +193,9 @@ function ClassForm({ handleProgChange }) {
                   ))}
                 </select>
               </div>
-              <div className="party-pic"></div>
+              <div className="party-pic">
+                <img></img>
+              </div>
             </div>
           </section>
           <section className="members" id="member-2">
