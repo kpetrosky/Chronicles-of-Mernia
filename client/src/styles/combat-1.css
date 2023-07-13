@@ -42,7 +42,7 @@ button:disabled {
     border: 2px solid black;
     padding-left: .5rem;
     padding-right: .5rem;
-    background-image: linear-gradient(to right, rgba(0, 215, 100, 0.816), rgba(138, 83, 1, 0.9));
+    background-image: linear-gradient(to right, rgba(0, 255, 30, 0.816), rgba(138, 83, 1, 0.9));
 
 }
 
@@ -194,10 +194,11 @@ button:disabled {
     border: 3px solid black;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    height: 20vw;
-    width: 10vw;
+    background-image: linear-gradient(to left, rgb(0, 255, 30), rgb(138, 83, 1));
+    /* justify-content: space-evenly; */
+    /* align-items: center; */
+    /* height: 20vw; */
+    /* width: 10vw; */
 }
 
 /* .party-btn {
@@ -218,7 +219,12 @@ button:disabled {
     justify-content: center;
     width: 10vw;
     height: 10vw;
-    background-color: rgba(32, 223, 32, 0.518);
+    background-color: rgb(0, 255, 30);
+}
+
+#player img {
+    width: 10vw;
+    height: 9vw;
 }
 
 #target {
@@ -228,7 +234,12 @@ button:disabled {
     justify-content: center;
     width: 10vw;
     height: 10vw;
-    background-color: rgba(255, 51, 0, 0.724);
+    background-color: red;
+}
+
+#target img {
+    width: 10vw;
+    height: 9vw;
 }
 
 .actions {
@@ -269,10 +280,30 @@ button:disabled {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+/* #start-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+} */
+
+.enemy-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    width: 5vw;
+    height: 10vh;
+    font-size: 1vw;
+    font-weight: bold;
+
+}
+
 .enemy-container {
-    /* border: 3px solid black; */
+    border: 3px solid black;
     display: flex;
     flex-direction: column;
+    background-image: linear-gradient(to left, rgb(0, 255, 30), rgb(138, 83, 1));
     /* justify-content: space-evenly; */
     /* align-items: center; */
     /* height: 20vw; */
@@ -301,6 +332,7 @@ button:disabled {
     font-weight: bold;
     font-size: 1rem;
     text-align: center;
+    background-image: linear-gradient(to top, rgb(0, 255, 30), rgb(138, 83, 1));
 }
 
 

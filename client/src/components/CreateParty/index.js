@@ -174,8 +174,8 @@ function ClassForm({ handleProgChange }) {
 
   return (
     <div className="party-main">
-      <h2 className="party-h2">Create Your Party!</h2>
       <form  onSubmit={handleFormSubmit}>
+      <h2 className="party-h2">Create Your Party!</h2>
         <div className="classes-div">
           <section className="members" id="member-1">
             <h2 className="card-title">Party Member 1</h2>

@@ -512,10 +512,10 @@ export default function Combat({handleProgChange, encounter, handleLoss}) {
                     
                     <div className="turn-taker">
                         {!initiativeCopy[0].isPlayer && !initiativeCopy[0].turnTaken && (
-                            <button id="start-btn" onClick={startEnemyTurn}>Start Enemy Turn</button>
+                            <button  className="enemy-btn" id="start-btn" onClick={startEnemyTurn}>Start Enemy Turn</button>
                         )}
                         {!initiativeCopy[0].isPlayer && initiativeCopy[0].turnTaken && (
-                            <button id="end-btn" onClick={wrapUpTurn}>End Enemy Turn</button>
+                            <button className="enemy-btn" id="end-btn" onClick={wrapUpTurn}>End Enemy Turn</button>
                        )}     
                     </div>
                     
