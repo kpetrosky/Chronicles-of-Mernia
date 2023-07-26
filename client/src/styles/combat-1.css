@@ -187,7 +187,7 @@ button:disabled {
 }
 
 .target-button {
-    border: .2rem solid blue;
+    border: .2rem solid black;
     height: 7vh;
     width: 100%;
     max-width: 5vw;
