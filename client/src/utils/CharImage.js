@@ -41,11 +41,11 @@ const imagePaths = [
     },
     {
         characterClass: "Kobold",
-        imagePath: "./enemyImages/kobold.jpg"
+        imagePath: "./enemyImages/kobold.png"
     },
     {
         characterClass: "Vulture",
-        imagePath: "./enemyImages/vulture.jpg"
+        imagePath: "./enemyImages/vulture.png"
     },
     {
         characterClass: "Orc",
