@@ -1,22 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Dancing+Script&family=Pacifico&family=Tilt+Prism&display=swap');
 
-/* HTML{
-    height: 100vh;
+/* body {
+    height: 90vh;
 } */
 
 h1 {
-    margin-bottom: 0px;
+    margin-bottom: 1rem;
 }
 
 .main-0 {
     background-image: url(../images/dungeonKind.jpeg);
     background-size: cover;
     background-position: center;
-    /* border-radius: 25px; */
-    /* border: 5px solid black; */
-    height: 100vh;
-    width: 100%;
+    border-radius: 25px;
+    border: 5px solid black;
+    height: 97vh;
+    width: 97vw;
     align-items: center;
+    
 }
 
 .main-1 {
@@ -25,9 +26,10 @@ h1 {
     /* background-position: center; */
     border-radius: 25px;
     border: 5px solid black;
-    height: 100vh;
-    width: 100%;
+    height: 97vh;
+    width: 97vw;
     align-items: center;
+    
 }
 .main-2 {
     background-image: url(../images/testForest.jpg);
@@ -35,8 +37,8 @@ h1 {
     background-position: center;
     border-radius: 25px;
     border: 5px solid black;
-    height: 100vh;
-    width: 100%;
+    height: 97vh;
+    width: 97%;
     align-items: center;
 }
 
@@ -45,8 +47,8 @@ h1 {
     background-size: cover;
     border-radius: 25px;
     border: 5px solid black;
-    height: 100vh;
-    width: 100%;
+    height: 97vh;
+    width: 97%;
     align-items: center;
 }
 
@@ -55,8 +57,8 @@ h1 {
     background-size: cover;
     border-radius: 25px;
     border: 5px solid black;
-    height: 100vh;
-    width: 100%;
+    height: 97vh;
+    width: 97%;
     align-items: center;
 }
 
@@ -122,24 +124,28 @@ h1 {
 
 .container-1 {
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     justify-content: center;
     align-items: center;
     /* border: 5px solid rgb(163, 22, 22); */
     padding-bottom: 1.5%;
     padding-top: 1%;
-    margin-right: 7%;
-    margin-left: 7%;
+    /* margin-right: 7%;
+    margin-left: 7%; */
     /* background-color: rgba(108, 20, 20, 0.507); */
-    border-radius: 25px;
-    position: relative;
+    /* border-radius: 25px; */
+    /* position: relative; */
+    width: 100%;
+    height: 65%;
+    /* max-width: 1500px;
+    max-height: 900px; */
 }
 
 .container-2 {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 5px solid black;
+    border: .3rem solid black;
     padding-bottom: 1.5%;
     /* padding-top: 1%; */
     margin-right: 7%;
@@ -147,13 +153,15 @@ h1 {
     background-color: rgba(255, 255, 255, 0.75);
     border-radius: 25px;
     position: relative;
+    width: 85%;
+    height: 65%;
 }
 
 .container-3 {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 5px solid black;
+    border: .3rem solid black;
     padding-bottom: 1.5%;
     /* padding-top: 1%; */
     margin-right: 7%;
@@ -161,6 +169,8 @@ h1 {
     background-color: rgba(255, 255, 255, 0.75);
     border-radius: 25px;
     position: relative;
+    width: 85%;
+    height: 65%;
 }
 
 .container-4 {
@@ -226,8 +236,8 @@ h1 {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    font-size: medium;
+    font-size: 1rem;
     color: white;
-    text-shadow: 0 0 30px rgb(0, 0, 0); 
-    padding: 3%; 
+    text-shadow: 0 0 30px rgb(0, 0, 0);
+    margin-top: 1rem; 
 }

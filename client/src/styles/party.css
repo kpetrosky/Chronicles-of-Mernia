@@ -11,13 +11,15 @@
     /* border: 3px solid black; */
     width: 80vw;
     height: 70vh;
+    max-width: 100%;
+    max-height: 100%;
   }
 
 .party-h2 {
     display: flex;
     justify-content: center;
     text-align: center;
-    font-size: 3rem;
+    font-size: 4vw;
     padding: 0;
     margin: 0;
     color: rgb(233, 190, 122);
@@ -28,6 +30,9 @@
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
+    /* border: 2px solid black; */
+    width: 100%;
 }
 /* class for all boxes together */
 .members {
@@ -36,62 +41,68 @@
     align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
-    border: 4px solid rgb(0, 0, 0);
-    /* height: 16vw; */
-    height: 25vh;
+    border: .2rem solid black;
+    height: 100%;
     margin: .5rem;
     background-image: linear-gradient(to right, rgba(159, 39, 39, 0.816), rgba(176, 127, 52, 0.9));
 }
 
 .member-box {
   display: flex;
-  /* flex-wrap: wrap; */
+  flex-wrap: wrap;
   justify-content: space-evenly;
-  align-items: center;
-  /* height: 4vw; */
-  /* border: 2px solid black; */
+  /* align-items: center; */
+  /* margin: .1rem; */
+  /* padding: .1rem; */
+  /* border: 2px solid yellow; */
+  width: 100%;
+  height: 60%;
 }
 
 .party-info {
-  border: 2px solid black;
-  justify-content: center;
-  align-items: center;
-  width: 40%;
-  height: 10vw;
+  border: .15rem solid black;
+  /* justify-content: space-evenly; */
+  /* align-items: center; */
+  text-align: left;
+  width: 10vw;
+  height: 15vh;
   font-size: 2vw;
+  margin: .1rem;
+  padding-left: .5rem;
 }
 
 .party-pic {
-  border: 2px solid black;
+  border: .15rem solid black;
   justify-content: center;
   align-items: center;
-  /* padding: 5%; */
   width: 10vw;
-  height: 10vw;
-  /* margin: .1rem; */
+  height: 15vh;
+  font-size: 2vw;
+  margin: .1rem;
 }
 
 #label1 {
   font-size: 2vw;
-  width:100%;
-  height: 2vw;
-  margin-left: .2rem;
+  height: 100%;
+  width:80%;
+  /* margin-left: .2rem; */
   color: rgb(233, 190, 122);
 }
 
 .name-text {
-  width: 70%;
+  width: 80%;
   font-size: 1vw;
-  height: 1.5vw;
-  margin-left: .2rem;
+  height: 20%;
+  /* margin-left: .2rem; */
   /* margin-bottom: .5rem; */
 }
 
 .party-class {
-  width: 80%;
+  width: 85%;
   font-size: 1vw;
-  height: 2vw;
-  margin-left: .2rem;
+  height: 20%;
+  /* padding-bottom: .5rem; */
+  /* margin-left: .2rem; */
   background:  rgb(233, 190, 122);
 }
 
