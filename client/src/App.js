@@ -7,8 +7,9 @@ import {
     createHttpLink,
   } from '@apollo/client';
   import { setContext } from '@apollo/client/link/context';
+const deployedUrl = 'https://mighty-depths-85532-6b358948c948.herokuapp.com/graphql'
 const httpLink = createHttpLink({
-uri: 'http://localhost:3001/graphql',
+uri: deployedUrl,
 });
 const authLink = setContext((_, { headers }) => {
     // get the authentication token from local storage if it exists
